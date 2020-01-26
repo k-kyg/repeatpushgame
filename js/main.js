@@ -18,7 +18,7 @@ var arrows = document.getElementById("arrows"), dfjk = document.getElementById("
         var _a;
         (_a = e) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () {
             var _a;
-            location.href = "./games/" + ((_a = e) === null || _a === void 0 ? void 0 : _a.id) + ".html";
+            location.href = "./game.html?gametype=" + encodeURIComponent((_a = e) === null || _a === void 0 ? void 0 : _a.id);
         });
     });
 }

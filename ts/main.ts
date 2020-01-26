@@ -19,7 +19,7 @@ const arrows: HTMLElement | null = document.getElementById("arrows"),
 	const arr: (HTMLElement | null)[] = [arrows, dfjk, space, enter, allkey, click];
 	arr.forEach(e => {
 		e?.addEventListener("click", () => {
-			location.href = `./games/${e?.id}.html`;
+			location.href = `./game.html?gametype=${encodeURIComponent(e?.id)}`;
 		});
 	});
 }
