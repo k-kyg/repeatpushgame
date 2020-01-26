@@ -24,6 +24,10 @@ body {
   background-color: var(--themecolor);
   color: var(--txtcolor);
 }
+.logo{
+	user-select: none;
+	cursor: pointer;
+}
 .play-buttons {
   position: absolute;
   top: 50%;
