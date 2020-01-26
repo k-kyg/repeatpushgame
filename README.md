@@ -1,2 +1,2 @@
 # kbacts
-- **このゲームは、https://github.com/kaida-jyouma/kbactsをもとにして作っています。**
+- **このゲームは、[https://github.com/kaida-jyouma/kbacts]()をもとにして作っています。**
