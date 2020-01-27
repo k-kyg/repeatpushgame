@@ -145,8 +145,8 @@ h1.countdown {
 			display: block;
 			width: 75px;
 			height: 75px;
-			background-color: var(--btnbgcolor);
-			color: var(--btntxtcolor);
+			background-color: var(--themecolor);
+			color: var(--txtcolor);
 			border-radius: 10px;
 			font-size: 30px;
 			line-height: 75px;
@@ -161,8 +161,8 @@ h1.countdown {
 		input[type="checkbox"]{
 			display: none;
 			&:checked + label{
-				background-color: var(--btnbghvcolor);
-				color: var(--btntxthvcolor);
+				background-color: rgb(0, 191, 255);
+				color: var(--txthvcolor);
 				transition: 0.1s;
 			}
 		}
