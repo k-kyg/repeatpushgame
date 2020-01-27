@@ -74,3 +74,19 @@ body {
     }
   }
 }
+.field{
+	position: absolute;
+	width: 90%;
+	height: 80%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+h1.countdown{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: 0;
+	transform: translate(-50%, -50%);
+	font-size: 4rem;
+}
