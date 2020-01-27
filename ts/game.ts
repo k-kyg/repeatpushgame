@@ -1,7 +1,7 @@
 const url: URL = new URL(location.href);
 const urlParam: URLSearchParams = url.searchParams;
 const gametype: string | null = urlParam.get("gametype");
-const timelimit: number | null = Number(urlParam.get("time"));
+const options: string | null = urlParam.get("option");
 const field: HTMLElement | null = document.getElementById("gamefield");
 const sleep = (x: number) => new Promise(r => setTimeout(r, x));
 const countdown = async () => {
@@ -28,7 +28,7 @@ const countdown = async () => {
 		--count;
 	}
 	field?.removeChild(countnode);
-	gamerender(timelimit);
+	gamerender(options);
 }
 const selectkeys = () => new Promise((resolve, reject) => {
 	const selectfield: HTMLDivElement = document.createElement("div");
@@ -78,7 +78,7 @@ const selectkeys = () => new Promise((resolve, reject) => {
 		before = cursor;
 	});
 });
-const gamerender = (timelimit: number = 10) => {
+const gamerender = (option: string | null) => {
 	console.log("Game Start!");
 }
 window.addEventListener("DOMContentLoaded", () => console.log(`gametype: ${gametype}`));

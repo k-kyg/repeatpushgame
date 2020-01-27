@@ -26,7 +26,8 @@ body {
 }
 .logo {
   user-select: none;
-  cursor: pointer;
+	cursor: pointer;
+	display: inline;
   a {
     text-decoration: none;
     color: var(--txtcolor);
@@ -111,5 +112,66 @@ h1.countdown {
 		&:first-child{
 			border-color: rgb(0, 191, 255);
 		}
+	}
+}
+#setopt{
+	fill: var(--txtcolor);
+	position: relative;
+	transform: translate(100%, 10%);
+	cursor: pointer;
+}
+#settingfield{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.7);
+	backdrop-filter: blur(3px);
+	transition: 500ms;
+	display: none;
+	.buttons{
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 50%;
+		height: 50%;
+		transform: translate(-50%, -50%);
+		background-color: rgba(0, 0, 0, 0.5);
+		border-radius: 5px;
+		label{
+			user-select: none;
+			float: left;
+			display: block;
+			width: 75px;
+			height: 75px;
+			background-color: var(--btnbgcolor);
+			color: var(--btntxtcolor);
+			border-radius: 10px;
+			font-size: 30px;
+			line-height: 75px;
+			transition: 0.1s;
+			cursor: pointer;
+			position: relative;
+			top: 50%;
+			left: 50%;
+			transform: translate(calc(-200% - 40px), -50%);
+			margin: 10px;
+		}
+		input[type="checkbox"]{
+			display: none;
+			&:checked + label{
+				background-color: var(--btnbghvcolor);
+				color: var(--btntxthvcolor);
+				transition: 0.1s;
+			}
+		}
+	}
+	#closebutton{
+		fill: white;
+		cursor: pointer;
+		position: absolute;
+		top: 10px;
+		right: 10px;
 	}
 }

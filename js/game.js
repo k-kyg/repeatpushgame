@@ -38,7 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var url = new URL(location.href);
 var urlParam = url.searchParams;
 var gametype = urlParam.get("gametype");
-var timelimit = Number(urlParam.get("time"));
+var options = urlParam.get("option");
 var field = document.getElementById("gamefield");
 var sleep = function (x) { return new Promise(function (r) { return setTimeout(r, x); }); };
 var countdown = function () { return __awaiter(void 0, void 0, void 0, function () {
@@ -85,7 +85,7 @@ var countdown = function () { return __awaiter(void 0, void 0, void 0, function 
                 return [3 /*break*/, 7];
             case 9:
                 (_c = field) === null || _c === void 0 ? void 0 : _c.removeChild(countnode);
-                gamerender(timelimit);
+                gamerender(options);
                 return [2 /*return*/];
         }
     });
@@ -143,8 +143,7 @@ var selectkeys = function () { return new Promise(function (resolve, reject) {
         before = cursor;
     });
 }); };
-var gamerender = function (timelimit) {
-    if (timelimit === void 0) { timelimit = 10; }
+var gamerender = function (option) {
     console.log("Game Start!");
 };
 window.addEventListener("DOMContentLoaded", function () { return console.log("gametype: " + gametype); });
