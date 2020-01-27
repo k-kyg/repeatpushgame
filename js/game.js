@@ -35,38 +35,96 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
 var url = new URL(location.href);
 var urlParam = url.searchParams;
 var gametype = urlParam.get("gametype");
 var timelimit = Number(urlParam.get("time"));
 var field = document.getElementById("gamefield");
 var sleep = function (x) { return new Promise(function (r) { return setTimeout(r, x); }); };
-var countdown = function () {
+var countdown = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var count, countnode;
+    var _a, _b;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
+            case 0:
+                count = 5;
+                if (!(gametype === "fourkeys")) return [3 /*break*/, 2];
+                return [4 /*yield*/, selectkeys()];
+            case 1:
+                _c.sent();
+                _c.label = 2;
+            case 2:
+                countnode = document.createElement("h1");
+                countnode.classList.add("countdown");
+                (_a = field) === null || _a === void 0 ? void 0 : _a.appendChild(countnode);
+                _c.label = 3;
+            case 3:
+                if (!(count > 0)) return [3 /*break*/, 5];
+                countnode.textContent = String(count);
+                return [4 /*yield*/, sleep(1000)];
+            case 4:
+                _c.sent();
+                --count;
+                return [3 /*break*/, 3];
+            case 5:
+                (_b = field) === null || _b === void 0 ? void 0 : _b.removeChild(countnode);
+                gamerender(timelimit);
+                return [2 /*return*/];
+        }
+    });
+}); };
+var selectkeys = function () { return new Promise(function (resolve) {
     var _a;
-    var count = 5;
-    var countnode = document.createElement("h1");
-    countnode.classList.add("countdown");
-    (_a = field) === null || _a === void 0 ? void 0 : _a.appendChild(countnode);
-    (function () { return __awaiter(void 0, void 0, void 0, function () {
+    var selectfield = document.createElement("div");
+    selectfield.classList.add("selectfield");
+    {
+        var count_1 = 0;
+        while (count_1 < 4) {
+            var selectnode = document.createElement("h1");
+            selectnode.setAttribute("data-fieldnum", String(count_1));
+            selectfield.appendChild(selectnode);
+            ++count_1;
+        }
+    }
+    (_a = field) === null || _a === void 0 ? void 0 : _a.appendChild(selectfield);
+    var count = (function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    if (!(count > 0)) return [3 /*break*/, 2];
-                    countnode.textContent = String(count);
-                    return [4 /*yield*/, sleep(1000)];
+                    if (!true) return [3 /*break*/, 2];
+                    return [5 /*yield**/, __values([0, 1, 2, 3])];
                 case 1:
                     _a.sent();
-                    --count;
                     return [3 /*break*/, 0];
-                case 2:
-                    gamerender(timelimit);
-                    return [2 /*return*/];
+                case 2: return [2 /*return*/];
             }
         });
-    }); })();
-};
+    })();
+    window.addEventListener("keydown", function (event) {
+        switch (event.keyCode) {
+            case 13:
+                resolve();
+                break;
+            default:
+                selectfield.querySelector("h1[data-fieldnum=\"" + count.next().value + "\"]").textContent = event.key;
+                break;
+        }
+    });
+}); };
 var gamerender = function (timelimit) {
     if (timelimit === void 0) { timelimit = 10; }
+    console.log("Game Start!");
 };
-window.addEventListener("DOMContentLoaded", function () { return console.log(gametype); });
+window.addEventListener("DOMContentLoaded", function () { return console.log("gametype: " + gametype); });
 window.addEventListener("load", countdown);
