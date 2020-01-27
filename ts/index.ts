@@ -13,7 +13,7 @@ let optionstr: string = "";
 {
 	const arr: (HTMLElement | null)[] = [arrows, dfjk, space, enter, allkey, fourkeys, click];
 	arr.forEach(e => {
-		e?.addEventListener("click", () => location.href = `./game.html?gametype=${encodeURIComponent(e?.id)}&option=${optionstr.replace(/,$/, "")}`);
+		e?.addEventListener("click", () => location.href = `./game.html?gametype=${encodeURIComponent(e?.id)}&option=${optionstr.replace(/,$/, "") || "none"}`);
 	});
 }
 setting?.addEventListener("click", () => {

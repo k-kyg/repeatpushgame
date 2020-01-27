@@ -7,7 +7,7 @@ var optionstr = "";
     var arr = [arrows, dfjk, space, enter, allkey, fourkeys, click];
     arr.forEach(function (e) {
         var _a;
-        (_a = e) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () { var _a; return location.href = "./game.html?gametype=" + encodeURIComponent((_a = e) === null || _a === void 0 ? void 0 : _a.id) + "&option=" + optionstr.replace(/,$/, ""); });
+        (_a = e) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () { var _a; return location.href = "./game.html?gametype=" + encodeURIComponent((_a = e) === null || _a === void 0 ? void 0 : _a.id) + "&option=" + (optionstr.replace(/,$/, "") || "none"); });
     });
 }
 (_b = setting) === null || _b === void 0 ? void 0 : _b.addEventListener("click", function () {
