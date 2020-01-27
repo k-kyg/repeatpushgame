@@ -64,6 +64,7 @@ const selectkeys = () => new Promise((resolve, reject) => {
 				break;
 			case 8:
 				selectfield.querySelector(`h1[data-fieldnum="${cursor}"]`)!.textContent = "";
+				--cursor;
 				break;
 			default:
 				if (event.key.length !== 1 || selectfield.textContent?.includes(event.key.toLowerCase())) break;

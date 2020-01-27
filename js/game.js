@@ -126,6 +126,7 @@ var selectkeys = function () { return new Promise(function (resolve, reject) {
                 break;
             case 8:
                 selectfield.querySelector("h1[data-fieldnum=\"" + cursor + "\"]").textContent = "";
+                --cursor;
                 break;
             default:
                 if (event.key.length !== 1 || ((_e = selectfield.textContent) === null || _e === void 0 ? void 0 : _e.includes(event.key.toLowerCase())))
