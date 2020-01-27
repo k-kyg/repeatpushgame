@@ -35,17 +35,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __values = (this && this.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
 var url = new URL(location.href);
 var urlParam = url.searchParams;
 var gametype = urlParam.get("gametype");
@@ -53,75 +42,105 @@ var timelimit = Number(urlParam.get("time"));
 var field = document.getElementById("gamefield");
 var sleep = function (x) { return new Promise(function (r) { return setTimeout(r, x); }); };
 var countdown = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var count, countnode;
-    var _a, _b;
-    return __generator(this, function (_c) {
-        switch (_c.label) {
+    var count, msg, _a, e_1, countnode;
+    var _b, _c;
+    return __generator(this, function (_d) {
+        switch (_d.label) {
             case 0:
                 count = 5;
-                if (!(gametype === "fourkeys")) return [3 /*break*/, 2];
-                return [4 /*yield*/, selectkeys()];
+                if (!(gametype === "fourkeys")) return [3 /*break*/, 6];
+                _d.label = 1;
             case 1:
-                _c.sent();
-                _c.label = 2;
+                if (!true) return [3 /*break*/, 6];
+                msg = "";
+                _d.label = 2;
             case 2:
+                _d.trys.push([2, 4, , 5]);
+                _a = String;
+                return [4 /*yield*/, selectkeys()];
+            case 3:
+                msg = _a.apply(void 0, [_d.sent()]);
+                if (confirm(msg)) {
+                    return [3 /*break*/, 6];
+                }
+                return [3 /*break*/, 5];
+            case 4:
+                e_1 = _d.sent();
+                console.log(e_1);
+                if (e_1)
+                    alert(e_1);
+                return [3 /*break*/, 5];
+            case 5: return [3 /*break*/, 1];
+            case 6:
                 countnode = document.createElement("h1");
                 countnode.classList.add("countdown");
-                (_a = field) === null || _a === void 0 ? void 0 : _a.appendChild(countnode);
-                _c.label = 3;
-            case 3:
-                if (!(count > 0)) return [3 /*break*/, 5];
+                (_b = field) === null || _b === void 0 ? void 0 : _b.appendChild(countnode);
+                _d.label = 7;
+            case 7:
+                if (!(count > 0)) return [3 /*break*/, 9];
                 countnode.textContent = String(count);
                 return [4 /*yield*/, sleep(1000)];
-            case 4:
-                _c.sent();
+            case 8:
+                _d.sent();
                 --count;
-                return [3 /*break*/, 3];
-            case 5:
-                (_b = field) === null || _b === void 0 ? void 0 : _b.removeChild(countnode);
+                return [3 /*break*/, 7];
+            case 9:
+                (_c = field) === null || _c === void 0 ? void 0 : _c.removeChild(countnode);
                 gamerender(timelimit);
                 return [2 /*return*/];
         }
     });
 }); };
-var selectkeys = function () { return new Promise(function (resolve) {
+var selectkeys = function () { return new Promise(function (resolve, reject) {
     var _a;
     var selectfield = document.createElement("div");
     selectfield.classList.add("selectfield");
     {
-        var count_1 = 0;
-        while (count_1 < 4) {
+        var count = 0;
+        while (count < 4) {
             var selectnode = document.createElement("h1");
-            selectnode.setAttribute("data-fieldnum", String(count_1));
+            selectnode.setAttribute("data-fieldnum", String(count));
             selectfield.appendChild(selectnode);
-            ++count_1;
+            ++count;
         }
     }
     (_a = field) === null || _a === void 0 ? void 0 : _a.appendChild(selectfield);
-    var count = (function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    if (!true) return [3 /*break*/, 2];
-                    return [5 /*yield**/, __values([0, 1, 2, 3])];
-                case 1:
-                    _a.sent();
-                    return [3 /*break*/, 0];
-                case 2: return [2 /*return*/];
-            }
-        });
-    })();
+    var cursor = 0;
+    var before = 0;
     window.addEventListener("keydown", function (event) {
+        var _a, _b, _c, _d, _e, _f, _g;
         switch (event.keyCode) {
             case 13:
-                resolve();
+                if (((_a = selectfield.textContent) === null || _a === void 0 ? void 0 : _a.length) !== 4) {
+                    (_b = field) === null || _b === void 0 ? void 0 : _b.removeChild(selectfield);
+                    reject("無効です。選び直してください。");
+                }
+                (_c = field) === null || _c === void 0 ? void 0 : _c.removeChild(selectfield);
+                resolve("\u300C" + ((_d = selectfield.textContent) === null || _d === void 0 ? void 0 : _d.split("").join(", ")) + "\u300D\u3067\u3088\u308D\u3057\u3044\u3067\u3059\u304B\uFF1F");
+                break;
+            case 37:
+                --cursor;
+                break;
+            case 39:
+                ++cursor;
+                break;
+            case 8:
+                selectfield.querySelector("h1[data-fieldnum=\"" + cursor + "\"]").textContent = "";
                 break;
             default:
-                if (event.key.length !== 1)
+                if (event.key.length !== 1 || ((_e = selectfield.textContent) === null || _e === void 0 ? void 0 : _e.includes(event.key.toLowerCase())))
                     break;
-                selectfield.querySelector("h1[data-fieldnum=\"" + count.next().value + "\"]").textContent = event.key.toLowerCase();
+                selectfield.querySelector("h1[data-fieldnum=\"" + cursor + "\"]").textContent = event.key.toLowerCase();
+                ++cursor;
                 break;
         }
+        if (cursor > 3)
+            cursor = 0;
+        else if (cursor < 0)
+            cursor = 3;
+        (_f = selectfield.querySelector("h1[data-fieldnum=\"" + before + "\"]")) === null || _f === void 0 ? void 0 : _f.setAttribute("style", "border-color: var(--txtcolor)");
+        (_g = selectfield.querySelector("h1[data-fieldnum=\"" + cursor + "\"]")) === null || _g === void 0 ? void 0 : _g.setAttribute("style", "border-color: rgb(0, 191, 255)");
+        before = cursor;
     });
 }); };
 var gamerender = function (timelimit) {
