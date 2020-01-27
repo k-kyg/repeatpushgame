@@ -42,6 +42,7 @@ const selectkeys = () => new Promise(resolve => {
 				resolve();
 				break;
 			default:
+				if (event.key.length !== 1) break;
 				selectfield.querySelector(`h1[data-fieldnum="${count.next().value}"]`)!.textContent = event.key;
 				break;
 		}
