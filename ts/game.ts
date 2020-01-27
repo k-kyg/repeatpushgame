@@ -15,7 +15,6 @@ const countdown = async () => {
 					break;
 				}
 			} catch (e) {
-				console.log(e);
 				if (e) alert(e);
 			}
 		}

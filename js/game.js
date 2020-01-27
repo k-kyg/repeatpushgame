@@ -66,7 +66,6 @@ var countdown = function () { return __awaiter(void 0, void 0, void 0, function 
                 return [3 /*break*/, 5];
             case 4:
                 e_1 = _d.sent();
-                console.log(e_1);
                 if (e_1)
                     alert(e_1);
                 return [3 /*break*/, 5];
