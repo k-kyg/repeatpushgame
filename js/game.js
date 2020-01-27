@@ -119,7 +119,7 @@ var selectkeys = function () { return new Promise(function (resolve) {
             default:
                 if (event.key.length !== 1)
                     break;
-                selectfield.querySelector("h1[data-fieldnum=\"" + count.next().value + "\"]").textContent = event.key;
+                selectfield.querySelector("h1[data-fieldnum=\"" + count.next().value + "\"]").textContent = event.key.toLowerCase();
                 break;
         }
     });
