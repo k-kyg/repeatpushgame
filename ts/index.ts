@@ -8,11 +8,12 @@ const arrows: HTMLElement | null = document.getElementById("arrows"),
 	settingfield: HTMLElement | null = document.getElementById("settingfield"),
 	setting: HTMLElement | null = document.getElementById("setopt"),
 	closebutton: HTMLElement | null = document.getElementById("closebutton");
-let option: string = "none";
+let option: NodeListOf<HTMLInputElement> | undefined = document.getElementById("settingfield")?.querySelectorAll(`input[type="checkbox"]:checked`);
+let optionstr: string = "";
 {
 	const arr: (HTMLElement | null)[] = [arrows, dfjk, space, enter, allkey, fourkeys, click];
 	arr.forEach(e => {
-		e?.addEventListener("click", () => location.href = `./game.html?gametype=${encodeURIComponent(e?.id)}&option=${option}`);
+		e?.addEventListener("click", () => location.href = `./game.html?gametype=${encodeURIComponent(e?.id)}&option=${optionstr.replace(/,$/, "")}`);
 	});
 }
 setting?.addEventListener("click", () => {
@@ -20,4 +21,8 @@ setting?.addEventListener("click", () => {
 });
 closebutton?.addEventListener("click", () => {
 	settingfield!.style.display = "none"
+	option = document.getElementById("settingfield")?.querySelectorAll(`input[type="checkbox"]:checked`);
+	option?.forEach(e => {
+		optionstr += `${e.id},`
+	});
 });

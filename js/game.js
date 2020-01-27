@@ -35,10 +35,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var _a;
 var url = new URL(location.href);
 var urlParam = url.searchParams;
 var gametype = urlParam.get("gametype");
-var options = urlParam.get("option");
+var options = (_a = urlParam.get("option")) === null || _a === void 0 ? void 0 : _a.split(",");
 var field = document.getElementById("gamefield");
 var sleep = function (x) { return new Promise(function (r) { return setTimeout(r, x); }); };
 var countdown = function () { return __awaiter(void 0, void 0, void 0, function () {
@@ -144,6 +145,7 @@ var selectkeys = function () { return new Promise(function (resolve, reject) {
     });
 }); };
 var gamerender = function (option) {
+    console.log("options: " + option);
     console.log("Game Start!");
 };
 window.addEventListener("DOMContentLoaded", function () { return console.log("gametype: " + gametype); });

@@ -1,7 +1,7 @@
 const url: URL = new URL(location.href);
 const urlParam: URLSearchParams = url.searchParams;
 const gametype: string | null = urlParam.get("gametype");
-const options: string | null = urlParam.get("option");
+const options: string[] | undefined = urlParam.get("option")?.split(",");
 const field: HTMLElement | null = document.getElementById("gamefield");
 const sleep = (x: number) => new Promise(r => setTimeout(r, x));
 const countdown = async () => {
@@ -78,7 +78,8 @@ const selectkeys = () => new Promise((resolve, reject) => {
 		before = cursor;
 	});
 });
-const gamerender = (option: string | null) => {
+const gamerender = (option: string[] | undefined) => {
+	console.log(`options: ${option}`);
 	console.log("Game Start!");
 }
 window.addEventListener("DOMContentLoaded", () => console.log(`gametype: ${gametype}`));
