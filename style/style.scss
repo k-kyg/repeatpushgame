@@ -22,12 +22,12 @@
 }
 body {
   background-color: var(--themecolor);
-  color: var(--txtcolor);
+	color: var(--txtcolor);
 }
 .logo {
   user-select: none;
-	cursor: pointer;
-	display: inline;
+  cursor: pointer;
+  display: inline;
   a {
     text-decoration: none;
     color: var(--txtcolor);
@@ -37,7 +37,9 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	animation: open 1s ease-in-out;
+	-webkit-animation: open 1s ease-in-out;
   div {
     position: relative;
     background-color: var(--btnbgcolor);
@@ -93,85 +95,102 @@ h1.countdown {
   font-size: 4rem;
 }
 .selectfield {
-	position: absolute;
-	width: auto;
-	height: calc(250px/8*3);
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+  position: absolute;
+  width: auto;
+  height: calc(250px / 8 * 3);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   h1 {
-		float: left;
-		width: calc(250px/4);
-		height: 100%;
-		font-size: 40px;
-		line-height: 250/8*3px;
-		margin: 10px 10px;
-		border-radius: 5px;
-		border: 2px solid var(--txtcolor);
-		user-select: none;
-		&:first-child{
-			border-color: rgb(0, 191, 255);
-		}
-	}
+    float: left;
+    width: calc(250px / 4);
+    height: 100%;
+    font-size: 40px;
+    line-height: 250/8 * 3px;
+    margin: 10px 10px;
+    border-radius: 5px;
+    border: 2px solid var(--txtcolor);
+    user-select: none;
+    &:first-child {
+      border-color: rgb(0, 191, 255);
+    }
+  }
 }
-#setopt{
-	fill: var(--txtcolor);
-	position: relative;
-	transform: translate(100%, 10%);
-	cursor: pointer;
+#setopt {
+  fill: var(--txtcolor);
+  position: relative;
+  transform: translate(100%, 10%);
+  cursor: pointer;
 }
-#settingfield{
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100vw;
-	height: 100vh;
-	background-color: rgba(0, 0, 0, 0.7);
-	backdrop-filter: blur(3px);
-	transition: 500ms;
-	display: none;
-	.buttons{
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		width: 50%;
-		height: 50%;
-		transform: translate(-50%, -50%);
-		background-color: rgba(0, 0, 0, 0.5);
-		border-radius: 5px;
-		label{
-			user-select: none;
-			float: left;
-			display: block;
-			width: 75px;
-			height: 75px;
-			background-color: var(--themecolor);
-			color: var(--txtcolor);
-			border-radius: 10px;
-			font-size: 30px;
-			line-height: 75px;
-			transition: 0.1s;
-			cursor: pointer;
-			position: relative;
-			top: 50%;
-			left: 50%;
-			transform: translate(calc(-200% - 40px), -50%);
-			margin: 10px;
-		}
-		input[type="checkbox"]{
-			display: none;
-			&:checked + label{
-				background-color: rgb(0, 191, 255);
-				color: var(--txthvcolor);
-				transition: 0.1s;
-			}
-		}
+#settingfield {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+	transition: clip-path 1s ease-in-out;
+	clip-path: circle(0 at 50% 50%);
+	// display: none;
+	&.active{
+		clip-path: circle(100% at 50% 50%);
 	}
-	#closebutton{
-		fill: white;
-		cursor: pointer;
-		position: absolute;
-		top: 10px;
-		right: 10px;
-	}
+  .buttons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
+    label {
+      user-select: none;
+      width: 75px;
+      height: 75px;
+      background-color: var(--themecolor);
+      color: var(--txtcolor);
+      border-radius: 10px;
+      font-size: 30px;
+      line-height: 75px;
+      transition: 0.1s;
+      cursor: pointer;
+      margin: 5px;
+      p {
+        margin: auto;
+      }
+    }
+    input[type="checkbox"] {
+      display: none;
+      &:checked + label {
+        background-color: rgb(0, 191, 255);
+        color: var(--txthvcolor);
+        transition: 0.1s;
+      }
+    }
+  }
+  #closebutton {
+    fill: white;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
 }
+// @keyframes open {
+//   0% {
+//     clip-path: circle(0 at 50% 50%);
+//     -webkit-clip-path: circle(0 at 50% 50%);
+//   }
+//   100% {
+//     clip-path: circle(100% at 50% 50%);
+//     -webkit-clip-path: circle(100% at 50% 50%);
+//   }
+// }

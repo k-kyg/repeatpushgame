@@ -17,10 +17,14 @@ let optionstr: string = "";
 	});
 }
 setting?.addEventListener("click", () => {
-	settingfield!.style.display = "block"
+	// settingfield!.style.display = "block"
+	setting!.style.visibility = "hidden";
+	settingfield?.classList.add("active");
 });
 closebutton?.addEventListener("click", () => {
-	settingfield!.style.display = "none"
+	// settingfield!.style.display = "none"
+	setTimeout(() => setting!.style.visibility = "visible", 1000);
+	settingfield?.classList.remove("active");
 	option = document.getElementById("settingfield")?.querySelectorAll(`input[type="checkbox"]:checked`);
 	option?.forEach(e => {
 		optionstr += `${e.id},`

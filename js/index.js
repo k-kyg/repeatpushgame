@@ -11,13 +11,18 @@ var optionstr = "";
     });
 }
 (_b = setting) === null || _b === void 0 ? void 0 : _b.addEventListener("click", function () {
-    settingfield.style.display = "block";
+    var _a;
+    // settingfield!.style.display = "block"
+    setting.style.visibility = "hidden";
+    (_a = settingfield) === null || _a === void 0 ? void 0 : _a.classList.add("active");
 });
 (_c = closebutton) === null || _c === void 0 ? void 0 : _c.addEventListener("click", function () {
-    var _a, _b;
-    settingfield.style.display = "none";
-    option = (_a = document.getElementById("settingfield")) === null || _a === void 0 ? void 0 : _a.querySelectorAll("input[type=\"checkbox\"]:checked");
-    (_b = option) === null || _b === void 0 ? void 0 : _b.forEach(function (e) {
+    var _a, _b, _c;
+    // settingfield!.style.display = "none"
+    setTimeout(function () { return setting.style.visibility = "visible"; }, 1000);
+    (_a = settingfield) === null || _a === void 0 ? void 0 : _a.classList.remove("active");
+    option = (_b = document.getElementById("settingfield")) === null || _b === void 0 ? void 0 : _b.querySelectorAll("input[type=\"checkbox\"]:checked");
+    (_c = option) === null || _c === void 0 ? void 0 : _c.forEach(function (e) {
         optionstr += e.id + ",";
     });
 });
