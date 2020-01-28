@@ -43,7 +43,7 @@ var options = (_a = urlParam.get("option")) === null || _a === void 0 ? void 0 :
 var field = document.getElementById("gamefield");
 var sleep = function (x) { return new Promise(function (r) { return setTimeout(r, x); }); };
 var countdown = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var count, msg, _a, e_1, countnode;
+    var count, msg, _a, e_1, optionarr, countnode;
     var _b, _c;
     return __generator(this, function (_d) {
         switch (_d.label) {
@@ -72,6 +72,8 @@ var countdown = function () { return __awaiter(void 0, void 0, void 0, function 
                 return [3 /*break*/, 5];
             case 5: return [3 /*break*/, 1];
             case 6:
+                optionarr = calculateoptions(options);
+                gamerender(optionarr[0], optionarr[1]);
                 countnode = document.createElement("h1");
                 countnode.classList.add("countdown");
                 (_b = field) === null || _b === void 0 ? void 0 : _b.appendChild(countnode);
@@ -86,7 +88,6 @@ var countdown = function () { return __awaiter(void 0, void 0, void 0, function 
                 return [3 /*break*/, 7];
             case 9:
                 (_c = field) === null || _c === void 0 ? void 0 : _c.removeChild(countnode);
-                gamerender(options);
                 return [2 /*return*/];
         }
     });
@@ -144,7 +145,48 @@ var selectkeys = function () { return new Promise(function (resolve, reject) {
         before = cursor;
     });
 }); };
-var gamerender = function (option) {
+var calculateoptions = function (options) {
+    var result = Array(2);
+    var time = 10;
+    var score = 360;
+    var acceptkeys = Array();
+    switch (gametype) {
+        case "arrows":
+            score = 360;
+            acceptkeys = [37, 38, 39, 40];
+            break;
+        case "dfjk":
+            score = 360;
+            [68, 70, 74, 75];
+            break;
+        case "space":
+            score = 900;
+            acceptkeys = [32];
+            break;
+        case "enter":
+            score = 900;
+            acceptkeys = [13];
+            break;
+        case "allkey":
+            score = 180;
+            break;
+        case "fourkeys":
+            score = 360;
+            break;
+        case "click":
+            score = 870;
+            break;
+    }
+    result = [time, score];
+    console.log(result);
+    console.log(acceptkeys);
+    return [result, acceptkeys];
+};
+var gamerender = function (options, acceptkeys) {
+    var timedisplay = document.createElement("h1");
+    var timelimit;
+};
+var gamestart = function (option) {
     console.log("options: " + option);
     console.log("Game Start!");
 };

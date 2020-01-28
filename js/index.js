@@ -10,6 +10,7 @@ var optionstr = "";
         (_a = e) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () { var _a; return location.href = "./game.html?gametype=" + encodeURIComponent((_a = e) === null || _a === void 0 ? void 0 : _a.id) + "&option=" + (optionstr.replace(/,$/, "") || "none"); });
     });
 }
+// window.addEventListener("keydown", (event) => console.log(event?.keyCode))
 (_b = setting) === null || _b === void 0 ? void 0 : _b.addEventListener("click", function () {
     var _a;
     // settingfield!.style.display = "block"

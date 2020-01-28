@@ -19,6 +19,8 @@ const countdown = async () => {
 			}
 		}
 	}
+	let optionarr = calculateoptions(options);
+	gamerender(optionarr[0], optionarr[1]);
 	const countnode: HTMLHeadingElement = document.createElement("h1");
 	countnode.classList.add("countdown");
 	field?.appendChild(countnode);
@@ -28,7 +30,6 @@ const countdown = async () => {
 		--count;
 	}
 	field?.removeChild(countnode);
-	gamerender(options);
 }
 const selectkeys = () => new Promise((resolve, reject) => {
 	const selectfield: HTMLDivElement = document.createElement("div");
@@ -78,7 +79,48 @@ const selectkeys = () => new Promise((resolve, reject) => {
 		before = cursor;
 	});
 });
-const gamerender = (option: string[] | undefined) => {
+const calculateoptions = (options: string[] | undefined) => {
+	let result: number[] = Array(2);
+	let time: number = 10;
+	let score: number = 360;
+	let acceptkeys: number[] | undefined = Array();
+	switch (gametype) {
+		case "arrows":
+			score = 360;
+			acceptkeys = [37, 38, 39, 40];
+			break;
+		case "dfjk":
+			score = 360;
+			[68, 70, 74, 75]
+			break;
+		case "space":
+			score = 900;
+			acceptkeys = [32];
+			break;
+		case "enter":
+			score = 900;
+			acceptkeys = [13];
+			break;
+		case "allkey":
+			score = 180;
+			break;
+		case "fourkeys":
+			score = 360;
+			break;
+		case "click":
+			score = 870;
+			break;
+	}
+	result = [time, score]
+	console.log(result)
+	console.log(acceptkeys);
+	return [result, acceptkeys];
+}
+const gamerender = (options: number[] | undefined, acceptkeys: number[] | undefined) => {
+	const timedisplay: HTMLHeadingElement = document.createElement("h1");
+	let timelimit: number;
+}
+const gamestart = (option: string[] | undefined) => {
 	console.log(`options: ${option}`);
 	console.log("Game Start!");
 }

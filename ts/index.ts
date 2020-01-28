@@ -16,6 +16,7 @@ let optionstr: string = "";
 		e?.addEventListener("click", () => location.href = `./game.html?gametype=${encodeURIComponent(e?.id)}&option=${optionstr.replace(/,$/, "") || "none"}`);
 	});
 }
+// window.addEventListener("keydown", (event) => console.log(event?.keyCode))
 setting?.addEventListener("click", () => {
 	// settingfield!.style.display = "block"
 	setting!.style.visibility = "hidden";
