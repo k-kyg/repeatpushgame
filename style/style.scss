@@ -22,7 +22,7 @@
 }
 body {
   background-color: var(--themecolor);
-	color: var(--txtcolor);
+  color: var(--txtcolor);
 }
 .logo {
   user-select: none;
@@ -37,9 +37,10 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-	transform: translate(-50%, -50%);
-	animation: open 1s ease-in-out;
-	-webkit-animation: open 1s ease-in-out;
+  transform: translate(-50%, -50%);
+  animation: open 1s ease-in-out;
+  -webkit-animation: open 1s ease-in-out;
+  z-index: 1;
   div {
     position: relative;
     background-color: var(--btnbgcolor);
@@ -131,15 +132,16 @@ h1.countdown {
   background-color: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
-	transition: clip-path 1s ease-in-out;
-	-webkit-transition: -webkit-clip-path 1s ease-in-out;
-	clip-path: circle(0 at 50% 50%);
-	-webkit-clip-path: circle(0 at 50% 50%);
-	// display: none;
-	&.active{
-		clip-path: circle(100% at 50% 50%);
-		-webkit-clip-path: circle(100% at 50% 50%);
-	}
+  transition: clip-path 1s ease-in-out;
+  -webkit-transition: -webkit-clip-path 1s ease-in-out;
+  clip-path: circle(0 at 50% 50%);
+  -webkit-clip-path: circle(0 at 50% 50%);
+	pointer-events: none;
+  &.active {
+		pointer-events: all;
+    clip-path: circle(100% at 50% 50%);
+    -webkit-clip-path: circle(100% at 50% 50%);
+  }
   .buttons {
     position: absolute;
     top: 50%;

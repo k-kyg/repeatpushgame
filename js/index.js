@@ -13,13 +13,13 @@ let optionstr = "";
 // window.addEventListener("keydown", (event) => console.log(event?.keyCode))
 (_b = setting) === null || _b === void 0 ? void 0 : _b.addEventListener("click", () => {
     var _a;
-    // settingfield!.style.display = "block"
+    settingfield.style.zIndex = "2";
     setting.style.visibility = "hidden";
     (_a = settingfield) === null || _a === void 0 ? void 0 : _a.classList.add("active");
 });
 (_c = closebutton) === null || _c === void 0 ? void 0 : _c.addEventListener("click", () => {
     var _a, _b, _c;
-    // settingfield!.style.display = "none"
+    setTimeout(() => settingfield.style.zIndex = "unset", 1000);
     setTimeout(() => setting.style.visibility = "visible", 1000);
     (_a = settingfield) === null || _a === void 0 ? void 0 : _a.classList.remove("active");
     option = (_b = document.getElementById("settingfield")) === null || _b === void 0 ? void 0 : _b.querySelectorAll(`input[type="checkbox"]:checked`);

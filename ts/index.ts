@@ -18,12 +18,12 @@ let optionstr: string = "";
 }
 // window.addEventListener("keydown", (event) => console.log(event?.keyCode))
 setting?.addEventListener("click", () => {
-	// settingfield!.style.display = "block"
+	settingfield!.style.zIndex = "2"
 	setting!.style.visibility = "hidden";
 	settingfield?.classList.add("active");
 });
 closebutton?.addEventListener("click", () => {
-	// settingfield!.style.display = "none"
+	setTimeout(() => settingfield!.style.zIndex = "unset", 1000)
 	setTimeout(() => setting!.style.visibility = "visible", 1000);
 	settingfield?.classList.remove("active");
 	option = document.getElementById("settingfield")?.querySelectorAll(`input[type="checkbox"]:checked`);
