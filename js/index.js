@@ -7,7 +7,13 @@ let optionstr = "";
     const arr = [arrows, dfjk, space, enter, allkey, fourkeys, click];
     arr.forEach(e => {
         var _a;
-        (_a = e) === null || _a === void 0 ? void 0 : _a.addEventListener("click", () => { var _a; return location.href = `./game.html?gametype=${encodeURIComponent((_a = e) === null || _a === void 0 ? void 0 : _a.id)}&option=${optionstr.replace(/,$/, "") || "none"}`; });
+        (_a = e) === null || _a === void 0 ? void 0 : _a.addEventListener("click", () => {
+            var _a;
+            if (optionstr)
+                if (!confirm(`オプション「${optionstr.replace(/,$/, "").split(",").join("、")}」がついています。\nスタートしてもよろしいですか？`))
+                    return;
+            location.href = `./game.html?gametype=${encodeURIComponent((_a = e) === null || _a === void 0 ? void 0 : _a.id)}&option=${optionstr.replace(/,$/, "") || "none"}`;
+        });
     });
 }
 // window.addEventListener("keydown", (event) => console.log(event?.keyCode))
