@@ -3,6 +3,7 @@ const urlParam: URLSearchParams = url.searchParams;
 const gametype: string | null = urlParam.get("gametype");
 const options: string[] | undefined = urlParam.get("option")?.split(",");
 const field: HTMLElement | null = document.getElementById("gamefield");
+const keycodes: number[] = Array(4);
 const sleep = (x: number) => new Promise(r => setTimeout(r, x));
 const countdown = async () => {
 	let count: number = 5;
@@ -56,6 +57,7 @@ const selectkeys = () => new Promise((resolve, reject) => {
 				field?.removeChild(selectfield);
 				resolve(`「${selectfield.textContent?.split("").join(", ")}」でよろしいですか？`);
 				break;
+			case 32: break;
 			case 37:
 				--cursor;
 				break;
@@ -64,11 +66,13 @@ const selectkeys = () => new Promise((resolve, reject) => {
 				break;
 			case 8:
 				selectfield.querySelector(`h1[data-fieldnum="${cursor}"]`)!.textContent = "";
+				delete keycodes[cursor];
 				--cursor;
 				break;
 			default:
 				if (event.key.length !== 1 || selectfield.textContent?.includes(event.key.toLowerCase())) break;
 				selectfield.querySelector(`h1[data-fieldnum="${cursor}"]`)!.textContent = event.key.toLowerCase();
+				keycodes[cursor] = event.keyCode;
 				++cursor;
 				break;
 		}

@@ -14,6 +14,7 @@ const urlParam = url.searchParams;
 const gametype = urlParam.get("gametype");
 const options = (_a = urlParam.get("option")) === null || _a === void 0 ? void 0 : _a.split(",");
 const field = document.getElementById("gamefield");
+const keycodes = Array(4);
 const sleep = (x) => new Promise(r => setTimeout(r, x));
 const countdown = () => __awaiter(void 0, void 0, void 0, function* () {
     var _b, _c;
@@ -72,6 +73,7 @@ const selectkeys = () => new Promise((resolve, reject) => {
                 (_c = field) === null || _c === void 0 ? void 0 : _c.removeChild(selectfield);
                 resolve(`「${(_d = selectfield.textContent) === null || _d === void 0 ? void 0 : _d.split("").join(", ")}」でよろしいですか？`);
                 break;
+            case 32: break;
             case 37:
                 --cursor;
                 break;
@@ -80,12 +82,14 @@ const selectkeys = () => new Promise((resolve, reject) => {
                 break;
             case 8:
                 selectfield.querySelector(`h1[data-fieldnum="${cursor}"]`).textContent = "";
+                delete keycodes[cursor];
                 --cursor;
                 break;
             default:
                 if (event.key.length !== 1 || ((_e = selectfield.textContent) === null || _e === void 0 ? void 0 : _e.includes(event.key.toLowerCase())))
                     break;
                 selectfield.querySelector(`h1[data-fieldnum="${cursor}"]`).textContent = event.key.toLowerCase();
+                keycodes[cursor] = event.keyCode;
                 ++cursor;
                 break;
         }
