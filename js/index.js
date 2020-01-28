@@ -10,7 +10,7 @@ let optionstr = "";
         (_a = e) === null || _a === void 0 ? void 0 : _a.addEventListener("click", () => {
             var _a;
             if (optionstr)
-                if (!confirm(`オプション「${optionstr.replace(/,$/, "").split(",").join("、")}」がついています。\nスタートしてもよろしいですか？`))
+                if (!confirm(`オプション「${(optionstr = [...new Set(optionstr.split(","))].join(",").replace(/,$/, "")).split(",").join("、")}」がついています。\nスタートしてもよろしいですか？`))
                     return;
             location.href = `./game.html?gametype=${encodeURIComponent((_a = e) === null || _a === void 0 ? void 0 : _a.id)}&option=${optionstr.replace(/,$/, "") || "none"}`;
         });

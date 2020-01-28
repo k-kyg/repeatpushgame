@@ -96,16 +96,21 @@ h1.countdown {
   font-size: 4rem;
 }
 .selectfield {
-  position: absolute;
+	position: absolute;
+	display: flex;
   width: auto;
-  height: calc(250px / 8 * 3);
+  height: auto;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
   h1 {
     float: left;
-    width: calc(250px / 4);
-    height: 100%;
+    width: 62.5px;
+    height: 93.75px;
     font-size: 40px;
     line-height: 250/8 * 3px;
     margin: 10px 10px;
@@ -117,10 +122,21 @@ h1.countdown {
     }
   }
 }
+.funcbtns{
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	margin: 0;
+	@media screen and (max-width: 399px){
+		top: unset;
+		bottom: 10px;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+}
 #setopt {
   fill: var(--txtcolor);
   position: relative;
-  transform: translate(100%, 10%);
   cursor: pointer;
 }
 #settingfield {
@@ -150,7 +166,7 @@ h1.countdown {
     top: 50%;
     left: 50%;
     width: 50%;
-    height: 50%;
+    height: 60%;
     transform: translate(-50%, -50%);
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 5px;
