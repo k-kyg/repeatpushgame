@@ -49,3 +49,6 @@ closehelpbtn?.addEventListener("click", () => {
 	setTimeout(() => funcbtns!.style.visibility = "visible", 1000);
 	helpfield?.classList.remove("active");
 });
+rankingbtn?.addEventListener("click", () => {
+	alert("Coming soon.");
+});

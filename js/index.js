@@ -1,5 +1,5 @@
 "use strict";
-var _a, _b, _c, _d, _e;
+var _a, _b, _c, _d, _e, _f;
 const arrows = document.getElementById("arrows"), dfjk = document.getElementById("dfjk"), space = document.getElementById("space"), enter = document.getElementById("enter"), allkey = document.getElementById("allkey"), fourkeys = document.getElementById("fourkeys"), click = document.getElementById("click"), settingfield = document.getElementById("settingfield"), setting = document.getElementById("setopt"), help = document.getElementById("help"), helpfield = document.getElementById("helpfield"), rankingbtn = document.getElementById("rankbtn"), funcbtns = document.getElementById("funcbtns"), closehelpbtn = document.getElementById("closehelpbtn"), closesettingbtn = document.getElementById("closesettingbtn");
 let option = (_a = document.getElementById("settingfield")) === null || _a === void 0 ? void 0 : _a.querySelectorAll(`input[type="checkbox"]:checked`);
 let optionstr = "";
@@ -44,4 +44,7 @@ let optionstr = "";
     setTimeout(() => helpfield.style.zIndex = "unset", 1000);
     setTimeout(() => funcbtns.style.visibility = "visible", 1000);
     (_a = helpfield) === null || _a === void 0 ? void 0 : _a.classList.remove("active");
+});
+(_f = rankingbtn) === null || _f === void 0 ? void 0 : _f.addEventListener("click", () => {
+    alert("Coming soon.");
 });
