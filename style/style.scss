@@ -171,7 +171,8 @@ h1.countdown {
     width: 80%;
     height: 75%;
     transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.5);
+		background-color: rgba(0, 0, 0, 0.5);
+		color: white;
 		border-radius: 5px;
 		overflow: scroll;
 		overflow-x: hidden;
@@ -231,6 +232,14 @@ h1.countdown {
     top: 10px;
     right: 10px;
   }
+}
+.cover{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: -10;
 }
 // @keyframes open {
 //   0% {
