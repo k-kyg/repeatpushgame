@@ -14,14 +14,19 @@ const arrows: HTMLElement | null = document.getElementById("arrows"),
 	closehelpbtn: HTMLElement | null = document.getElementById("closehelpbtn"),
 	closesettingbtn: HTMLElement | null = document.getElementById("closesettingbtn");
 let option: NodeListOf<HTMLInputElement> | undefined = document.getElementById("settingfield")?.querySelectorAll(`input[type="checkbox"]:checked`);
-let optionstr: string = "";
 {
 	const arr: (HTMLElement | null)[] = [arrows, dfjk, space, enter, allkey, fourkeys, click];
 	arr.forEach(e => {
 		e?.addEventListener("click", () => {
+			let optionstr: string = "";
+			option = document.getElementById("settingfield")?.querySelectorAll(`input[type="checkbox"]:checked`);
+			option?.forEach(e => {
+				optionstr += `${e.id},`
+			});
 			if (optionstr) if (!confirm(`オプション「${(optionstr = [...new Set(optionstr.split(","))].join(",").replace(/,$/, "")).split(",").join("、")}」がついています。\nスタートしてもよろしいですか？`)) return;
 			location.href = `./game.html?gametype=${encodeURIComponent(e?.id)}&option=${optionstr.replace(/,$/, "") || "none"}`
 		});
+
 	});
 }
 // window.addEventListener("keydown", (event) => console.log(event?.keyCode))
@@ -34,10 +39,6 @@ closesettingbtn?.addEventListener("click", () => {
 	setTimeout(() => settingfield!.style.zIndex = "unset", 1000)
 	setTimeout(() => funcbtns!.style.visibility = "visible", 1000);
 	settingfield?.classList.remove("active");
-	option = document.getElementById("settingfield")?.querySelectorAll(`input[type="checkbox"]:checked`);
-	option?.forEach(e => {
-		optionstr += `${e.id},`
-	});
 });
 help?.addEventListener("click", () => {
 	helpfield!.style.zIndex = "2"
