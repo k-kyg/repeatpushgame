@@ -159,8 +159,8 @@ function* gamerender(option: IOption) {
 	field?.appendChild(timernode);
 	yield;
 }
-const gamestart = (options: IOption) => {
-	console.log(`options: ${option}`);
+const gamestart = (option: IOption) => {
+	console.log(`options: ${options}`);
 	console.log("Game Start!");
 }
 window.addEventListener("DOMContentLoaded", () => console.log(`gametype: ${gametype}`));

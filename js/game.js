@@ -236,8 +236,8 @@ function gamerender(option) {
         }
     });
 }
-var gamestart = function (options) {
-    console.log("options: " + option);
+var gamestart = function (option) {
+    console.log("options: " + options);
     console.log("Game Start!");
 };
 window.addEventListener("DOMContentLoaded", function () { return console.log("gametype: " + gametype); });
