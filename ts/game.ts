@@ -4,6 +4,11 @@ const gametype: string | null = urlParam.get("gametype");
 const options: string[] | undefined = urlParam.get("option")?.split(",");
 const field: HTMLElement | null = document.getElementById("gamefield");
 const keycodes: number[] = Array(4);
+interface IOption {
+	time: number;
+	score: number;
+	acceptkeys: number[];
+}
 const sleep = (x: number) => new Promise(r => setTimeout(r, x));
 const countdown = async () => {
 	let count: number = 5;
@@ -12,16 +17,15 @@ const countdown = async () => {
 			let msg: string = "";
 			try {
 				msg = String(await selectkeys());
-				if (confirm(msg)) {
-					break;
-				}
+				if (confirm(msg)) break;
 			} catch (e) {
 				if (e) alert(e);
 			}
 		}
 	}
-	let optionarr = calculateoptions(options);
-	gamerender(optionarr[0], optionarr[1]);
+	let option: IOption = calculateoptions(options);
+	const render: Generator<undefined, void, unknown> = gamerender(option);
+	render.next();
 	const countnode: HTMLHeadingElement = document.createElement("h1");
 	countnode.classList.add("countdown");
 	field?.appendChild(countnode);
@@ -31,6 +35,8 @@ const countdown = async () => {
 		--count;
 	}
 	field?.removeChild(countnode);
+	render.next();
+	gamestart(option);
 }
 const selectkeys = () => new Promise((resolve, reject) => {
 	const selectfield: HTMLDivElement = document.createElement("div");
@@ -84,7 +90,6 @@ const selectkeys = () => new Promise((resolve, reject) => {
 	});
 });
 const calculateoptions = (options: string[] | undefined) => {
-	let result: number[] = Array(2);
 	let time: number = 10;
 	let score: number = 360;
 	let acceptkeys: number[] | undefined = Array();
@@ -115,16 +120,46 @@ const calculateoptions = (options: string[] | undefined) => {
 			score = 870;
 			break;
 	}
-	result = [time, score]
+	if (options?.includes("2x")) score *= 2;
+	if (options?.includes("4x")) {
+		score *= 4;
+		time *= 0.4;
+		time = Math.floor(time);
+	}
+	if (options?.includes("0.5x")) {
+		score *= 2;
+		time *= 0.5;
+	}
+	if (options?.includes("+5")) time += 5;
+	let result: IOption = {
+		time: time,
+		score: score,
+		acceptkeys: acceptkeys
+	}
 	console.log(result)
 	console.log(acceptkeys);
-	return [result, acceptkeys];
+	return result;
 }
-const gamerender = (options: number[] | undefined, acceptkeys: number[] | undefined) => {
-	const timedisplay: HTMLHeadingElement = document.createElement("h1");
-	let timelimit: number;
+function* gamerender(option: IOption) {
+	const timernode: HTMLHeadingElement = document.createElement("h1");
+	const span: HTMLSpanElement = document.createElement("span");
+	const time: HTMLSpanElement = document.createElement("span");
+	const br: HTMLBRElement = document.createElement("br");
+	const discription: HTMLHeadingElement = document.createElement("h2");
+	let timelimit: number = option.time;
+	span.textContent = "TimeLimit: ";
+	time.textContent = String(timelimit);
+	discription.textContent = `${gametype === "click" ? "画面をクリックし" : "キーボードを連打し"}てください`;
+	time.id = "timer"
+	timernode.appendChild(span);
+	timernode.appendChild(time);
+	yield;
+	field?.appendChild(discription);
+	field?.appendChild(br);
+	field?.appendChild(timernode);
+	yield;
 }
-const gamestart = (option: string[] | undefined) => {
+const gamestart = (options: IOption) => {
 	console.log(`options: ${option}`);
 	console.log("Game Start!");
 }

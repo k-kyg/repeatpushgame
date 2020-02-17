@@ -44,7 +44,7 @@ var field = document.getElementById("gamefield");
 var keycodes = Array(4);
 var sleep = function (x) { return new Promise(function (r) { return setTimeout(r, x); }); };
 var countdown = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var count, msg, _a, e_1, optionarr, countnode;
+    var count, msg, _a, e_1, option, render, countnode;
     var _b, _c;
     return __generator(this, function (_d) {
         switch (_d.label) {
@@ -62,9 +62,8 @@ var countdown = function () { return __awaiter(void 0, void 0, void 0, function 
                 return [4 /*yield*/, selectkeys()];
             case 3:
                 msg = _a.apply(void 0, [_d.sent()]);
-                if (confirm(msg)) {
+                if (confirm(msg))
                     return [3 /*break*/, 6];
-                }
                 return [3 /*break*/, 5];
             case 4:
                 e_1 = _d.sent();
@@ -73,8 +72,9 @@ var countdown = function () { return __awaiter(void 0, void 0, void 0, function 
                 return [3 /*break*/, 5];
             case 5: return [3 /*break*/, 1];
             case 6:
-                optionarr = calculateoptions(options);
-                gamerender(optionarr[0], optionarr[1]);
+                option = calculateoptions(options);
+                render = gamerender(option);
+                render.next();
                 countnode = document.createElement("h1");
                 countnode.classList.add("countdown");
                 (_b = field) === null || _b === void 0 ? void 0 : _b.appendChild(countnode);
@@ -89,6 +89,8 @@ var countdown = function () { return __awaiter(void 0, void 0, void 0, function 
                 return [3 /*break*/, 7];
             case 9:
                 (_c = field) === null || _c === void 0 ? void 0 : _c.removeChild(countnode);
+                render.next();
+                gamestart(option);
                 return [2 /*return*/];
         }
     });
@@ -150,7 +152,7 @@ var selectkeys = function () { return new Promise(function (resolve, reject) {
     });
 }); };
 var calculateoptions = function (options) {
-    var result = Array(2);
+    var _a, _b, _c, _d;
     var time = 10;
     var score = 360;
     var acceptkeys = Array();
@@ -181,16 +183,60 @@ var calculateoptions = function (options) {
             score = 870;
             break;
     }
-    result = [time, score];
+    if ((_a = options) === null || _a === void 0 ? void 0 : _a.includes("2x"))
+        score *= 2;
+    if ((_b = options) === null || _b === void 0 ? void 0 : _b.includes("4x")) {
+        score *= 4;
+        time *= 0.4;
+        time = Math.floor(time);
+    }
+    if ((_c = options) === null || _c === void 0 ? void 0 : _c.includes("0.5x")) {
+        score *= 2;
+        time *= 0.5;
+    }
+    if ((_d = options) === null || _d === void 0 ? void 0 : _d.includes("+5"))
+        time += 5;
+    var result = {
+        time: time,
+        score: score,
+        acceptkeys: acceptkeys
+    };
     console.log(result);
     console.log(acceptkeys);
-    return [result, acceptkeys];
+    return result;
 };
-var gamerender = function (options, acceptkeys) {
-    var timedisplay = document.createElement("h1");
-    var timelimit;
-};
-var gamestart = function (option) {
+function gamerender(option) {
+    var timernode, span, time, br, discription, timelimit;
+    var _a, _b, _c;
+    return __generator(this, function (_d) {
+        switch (_d.label) {
+            case 0:
+                timernode = document.createElement("h1");
+                span = document.createElement("span");
+                time = document.createElement("span");
+                br = document.createElement("br");
+                discription = document.createElement("h2");
+                timelimit = option.time;
+                span.textContent = "TimeLimit: ";
+                time.textContent = String(timelimit);
+                discription.textContent = (gametype === "click" ? "画面をクリックし" : "キーボードを連打し") + "\u3066\u304F\u3060\u3055\u3044";
+                time.id = "timer";
+                timernode.appendChild(span);
+                timernode.appendChild(time);
+                return [4 /*yield*/];
+            case 1:
+                _d.sent();
+                (_a = field) === null || _a === void 0 ? void 0 : _a.appendChild(discription);
+                (_b = field) === null || _b === void 0 ? void 0 : _b.appendChild(br);
+                (_c = field) === null || _c === void 0 ? void 0 : _c.appendChild(timernode);
+                return [4 /*yield*/];
+            case 2:
+                _d.sent();
+                return [2 /*return*/];
+        }
+    });
+}
+var gamestart = function (options) {
     console.log("options: " + option);
     console.log("Game Start!");
 };
