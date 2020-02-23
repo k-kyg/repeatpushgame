@@ -9,6 +9,12 @@ interface IOption {
 	score: number;
 	acceptkeys: number[];
 }
+interface IResult {
+	score: number;
+	count: number;
+	gametype: string | null;
+	options: string[] | undefined;
+}
 const sleep = (x: number) => new Promise(r => setTimeout(r, x));
 const countdown = async () => {
 	let count: number = 5;
@@ -100,7 +106,7 @@ const calculateoptions = (options: string[] | undefined) => {
 			break;
 		case "dfjk":
 			score = 360;
-			[68, 70, 74, 75]
+			acceptkeys = [68, 70, 74, 75];
 			break;
 		case "space":
 			score = 900;
@@ -115,6 +121,7 @@ const calculateoptions = (options: string[] | undefined) => {
 			break;
 		case "fourkeys":
 			score = 360;
+			acceptkeys = keycodes;
 			break;
 		case "click":
 			score = 870;
@@ -157,11 +164,119 @@ function* gamerender(option: IOption) {
 	field?.appendChild(discription);
 	field?.appendChild(br);
 	field?.appendChild(timernode);
+	if (gametype === "click") field?.classList.add("gametypeclick");
 	yield;
 }
-const gamestart = (option: IOption) => {
+const gamestart = async (option: IOption) => {
+	const timernode: HTMLSpanElement | null = document.getElementById("timer");
+	let limit: number = option.time;
+	let score: number = 0;
+	let count: number = 0;
 	console.log(`options: ${options}`);
 	console.log("Game Start!");
+	if (gametype === "click") field?.addEventListener("click", () => ++count);
+	else if (gametype === "allkey") window.addEventListener("keyup", () => ++count, true);
+	else {
+		window.addEventListener("keyup", event => {
+			if (option.acceptkeys.includes(event.keyCode)) ++count;
+		}, true);
+	}
+	while (true) {
+		await sleep(1000);
+		--limit;
+		timernode!.textContent = String(limit);
+		if (limit <= 0) break;
+	}
+	let _count = count;
+	if (options?.includes("2x")) _count /= 2;
+	if (options?.includes("+5")) Math.round(_count = _count * 0.4);
+	score = _count * option.score;
+	score += (_count - _count % 100) / 100 * 10;
+	const result: IResult = {
+		count: count,
+		score: parseInt(String(score)),
+		gametype: gametype,
+		options: options
+	}
+	field?.remove();
+	showresult(option, result);
+}
+const showresult = (option: IOption, result: IResult) => {
+	const field: HTMLDivElement = document.createElement("div");
+	field.id = "gamefield";
+	field.classList.add("field");
+	document.getElementsByTagName("body")[0].appendChild(field);
+	const resulttable: HTMLTableElement = document.createElement("table");
+	const tabletitlerow: HTMLTableRowElement = document.createElement("tr"),
+		tabletitle: HTMLTableHeaderCellElement = document.createElement("th");
+	const gametyperow: HTMLTableRowElement = document.createElement("tr"),
+		gametypetitle: HTMLTableDataCellElement = document.createElement("td"),
+		gametypedata: HTMLTableDataCellElement = document.createElement("td");
+	const timerow: HTMLTableRowElement = document.createElement("tr"),
+		timetitle: HTMLTableDataCellElement = document.createElement("td"),
+		timedata: HTMLTableDataCellElement = document.createElement("td");
+	const scorerow: HTMLTableRowElement = document.createElement("tr"),
+		scoretitle: HTMLTableDataCellElement = document.createElement("td"),
+		scoredata: HTMLTableDataCellElement = document.createElement("td");
+	const countrow: HTMLTableRowElement = document.createElement("tr"),
+		counttitle: HTMLTableDataCellElement = document.createElement("td"),
+		countdata: HTMLTableDataCellElement = document.createElement("td");
+	const optionsrow: HTMLTableRowElement = document.createElement("tr"),
+		optionstitle: HTMLTableCellElement = document.createElement("td"),
+		optiondata: HTMLTableDataCellElement = document.createElement("td");
+	tabletitle.textContent = "結果";
+	gametypetitle.textContent = "ゲームタイプ";
+	timetitle.textContent = "制限時間";
+	scoretitle.textContent = "スコア";
+	counttitle.textContent = "打数";
+	optionstitle.textContent = "オプション";
+	switch (gametype) {
+		case "arrows":
+			gametypedata.textContent = "上下左右キー";
+			break;
+		case "dfjk":
+			gametypedata.textContent = "dfjk";
+			break;
+		case "space":
+			gametypedata.textContent = "スペースキー";
+			break;
+		case "enter":
+			gametypedata.textContent = "エンターキー";
+			break;
+		case "allkey":
+			gametypedata.textContent = "全てのキー";
+			break;
+		case "fourkeys":
+			gametypedata.textContent = "お好きな4キー";
+			break;
+		case "click":
+			gametypedata.textContent = "マウスクリック";
+			break;
+	}
+	timedata.textContent = String(option.time);
+	scoredata.textContent = String(result.score);
+	countdata.textContent = String(result.count);
+	optiondata.textContent = String(result.options?.join(", ").replace(/,\s$/, ""));
+	resulttable.id = "resulttable"
+	tabletitle.setAttribute("colspan", "2");
+	tabletitlerow.appendChild(tabletitle);
+	gametyperow.appendChild(gametypetitle);
+	gametyperow.appendChild(gametypedata);
+	timerow.appendChild(timetitle);
+	timerow.appendChild(timedata);
+	scorerow.appendChild(scoretitle);
+	scorerow.appendChild(scoredata);
+	countrow.appendChild(counttitle);
+	countrow.appendChild(countdata);
+	optionsrow.appendChild(optionstitle);
+	optionsrow.appendChild(optiondata);
+	resulttable.appendChild(tabletitlerow);
+	resulttable.appendChild(gametyperow);
+	resulttable.appendChild(timerow);
+	resulttable.appendChild(scorerow);
+	resulttable.appendChild(countrow);
+	resulttable.appendChild(optionsrow);
+	field.appendChild(resulttable);
 }
 window.addEventListener("DOMContentLoaded", () => console.log(`gametype: ${gametype}`));
 window.addEventListener("load", countdown);

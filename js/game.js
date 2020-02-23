@@ -45,28 +45,27 @@ var keycodes = Array(4);
 var sleep = function (x) { return new Promise(function (r) { return setTimeout(r, x); }); };
 var countdown = function () { return __awaiter(void 0, void 0, void 0, function () {
     var count, msg, _a, e_1, option, render, countnode;
-    var _b, _c;
-    return __generator(this, function (_d) {
-        switch (_d.label) {
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
                 count = 5;
                 if (!(gametype === "fourkeys")) return [3 /*break*/, 6];
-                _d.label = 1;
+                _b.label = 1;
             case 1:
                 if (!true) return [3 /*break*/, 6];
                 msg = "";
-                _d.label = 2;
+                _b.label = 2;
             case 2:
-                _d.trys.push([2, 4, , 5]);
+                _b.trys.push([2, 4, , 5]);
                 _a = String;
                 return [4 /*yield*/, selectkeys()];
             case 3:
-                msg = _a.apply(void 0, [_d.sent()]);
+                msg = _a.apply(void 0, [_b.sent()]);
                 if (confirm(msg))
                     return [3 /*break*/, 6];
                 return [3 /*break*/, 5];
             case 4:
-                e_1 = _d.sent();
+                e_1 = _b.sent();
                 if (e_1)
                     alert(e_1);
                 return [3 /*break*/, 5];
@@ -77,18 +76,18 @@ var countdown = function () { return __awaiter(void 0, void 0, void 0, function 
                 render.next();
                 countnode = document.createElement("h1");
                 countnode.classList.add("countdown");
-                (_b = field) === null || _b === void 0 ? void 0 : _b.appendChild(countnode);
-                _d.label = 7;
+                field === null || field === void 0 ? void 0 : field.appendChild(countnode);
+                _b.label = 7;
             case 7:
                 if (!(count > 0)) return [3 /*break*/, 9];
                 countnode.textContent = String(count);
                 return [4 /*yield*/, sleep(1000)];
             case 8:
-                _d.sent();
+                _b.sent();
                 --count;
                 return [3 /*break*/, 7];
             case 9:
-                (_c = field) === null || _c === void 0 ? void 0 : _c.removeChild(countnode);
+                field === null || field === void 0 ? void 0 : field.removeChild(countnode);
                 render.next();
                 gamestart(option);
                 return [2 /*return*/];
@@ -96,7 +95,6 @@ var countdown = function () { return __awaiter(void 0, void 0, void 0, function 
     });
 }); };
 var selectkeys = function () { return new Promise(function (resolve, reject) {
-    var _a;
     var selectfield = document.createElement("div");
     selectfield.classList.add("selectfield");
     {
@@ -108,19 +106,19 @@ var selectkeys = function () { return new Promise(function (resolve, reject) {
             ++count;
         }
     }
-    (_a = field) === null || _a === void 0 ? void 0 : _a.appendChild(selectfield);
+    field === null || field === void 0 ? void 0 : field.appendChild(selectfield);
     var cursor = 0;
     var before = 0;
     window.addEventListener("keydown", function (event) {
-        var _a, _b, _c, _d, _e, _f, _g;
+        var _a, _b, _c, _d, _e;
         switch (event.keyCode) {
             case 13:
                 if (((_a = selectfield.textContent) === null || _a === void 0 ? void 0 : _a.length) !== 4) {
-                    (_b = field) === null || _b === void 0 ? void 0 : _b.removeChild(selectfield);
+                    field === null || field === void 0 ? void 0 : field.removeChild(selectfield);
                     reject("無効です。選び直してください。");
                 }
-                (_c = field) === null || _c === void 0 ? void 0 : _c.removeChild(selectfield);
-                resolve("\u300C" + ((_d = selectfield.textContent) === null || _d === void 0 ? void 0 : _d.split("").join(", ")) + "\u300D\u3067\u3088\u308D\u3057\u3044\u3067\u3059\u304B\uFF1F");
+                field === null || field === void 0 ? void 0 : field.removeChild(selectfield);
+                resolve("\u300C" + ((_b = selectfield.textContent) === null || _b === void 0 ? void 0 : _b.split("").join(", ")) + "\u300D\u3067\u3088\u308D\u3057\u3044\u3067\u3059\u304B\uFF1F");
                 break;
             case 32: break;
             case 37:
@@ -135,7 +133,7 @@ var selectkeys = function () { return new Promise(function (resolve, reject) {
                 --cursor;
                 break;
             default:
-                if (event.key.length !== 1 || ((_e = selectfield.textContent) === null || _e === void 0 ? void 0 : _e.includes(event.key.toLowerCase())))
+                if (event.key.length !== 1 || ((_c = selectfield.textContent) === null || _c === void 0 ? void 0 : _c.includes(event.key.toLowerCase())))
                     break;
                 selectfield.querySelector("h1[data-fieldnum=\"" + cursor + "\"]").textContent = event.key.toLowerCase();
                 keycodes[cursor] = event.keyCode;
@@ -146,13 +144,12 @@ var selectkeys = function () { return new Promise(function (resolve, reject) {
             cursor = 0;
         else if (cursor < 0)
             cursor = 3;
-        (_f = selectfield.querySelector("h1[data-fieldnum=\"" + before + "\"]")) === null || _f === void 0 ? void 0 : _f.setAttribute("style", "border-color: var(--txtcolor)");
-        (_g = selectfield.querySelector("h1[data-fieldnum=\"" + cursor + "\"]")) === null || _g === void 0 ? void 0 : _g.setAttribute("style", "border-color: rgb(0, 191, 255)");
+        (_d = selectfield.querySelector("h1[data-fieldnum=\"" + before + "\"]")) === null || _d === void 0 ? void 0 : _d.setAttribute("style", "border-color: var(--txtcolor)");
+        (_e = selectfield.querySelector("h1[data-fieldnum=\"" + cursor + "\"]")) === null || _e === void 0 ? void 0 : _e.setAttribute("style", "border-color: rgb(0, 191, 255)");
         before = cursor;
     });
 }); };
 var calculateoptions = function (options) {
-    var _a, _b, _c, _d;
     var time = 10;
     var score = 360;
     var acceptkeys = Array();
@@ -163,7 +160,7 @@ var calculateoptions = function (options) {
             break;
         case "dfjk":
             score = 360;
-            [68, 70, 74, 75];
+            acceptkeys = [68, 70, 74, 75];
             break;
         case "space":
             score = 900;
@@ -178,23 +175,24 @@ var calculateoptions = function (options) {
             break;
         case "fourkeys":
             score = 360;
+            acceptkeys = keycodes;
             break;
         case "click":
             score = 870;
             break;
     }
-    if ((_a = options) === null || _a === void 0 ? void 0 : _a.includes("2x"))
+    if (options === null || options === void 0 ? void 0 : options.includes("2x"))
         score *= 2;
-    if ((_b = options) === null || _b === void 0 ? void 0 : _b.includes("4x")) {
+    if (options === null || options === void 0 ? void 0 : options.includes("4x")) {
         score *= 4;
         time *= 0.4;
         time = Math.floor(time);
     }
-    if ((_c = options) === null || _c === void 0 ? void 0 : _c.includes("0.5x")) {
+    if (options === null || options === void 0 ? void 0 : options.includes("0.5x")) {
         score *= 2;
         time *= 0.5;
     }
-    if ((_d = options) === null || _d === void 0 ? void 0 : _d.includes("+5"))
+    if (options === null || options === void 0 ? void 0 : options.includes("+5"))
         time += 5;
     var result = {
         time: time,
@@ -207,9 +205,8 @@ var calculateoptions = function (options) {
 };
 function gamerender(option) {
     var timernode, span, time, br, discription, timelimit;
-    var _a, _b, _c;
-    return __generator(this, function (_d) {
-        switch (_d.label) {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
             case 0:
                 timernode = document.createElement("h1");
                 span = document.createElement("span");
@@ -225,20 +222,137 @@ function gamerender(option) {
                 timernode.appendChild(time);
                 return [4 /*yield*/];
             case 1:
-                _d.sent();
-                (_a = field) === null || _a === void 0 ? void 0 : _a.appendChild(discription);
-                (_b = field) === null || _b === void 0 ? void 0 : _b.appendChild(br);
-                (_c = field) === null || _c === void 0 ? void 0 : _c.appendChild(timernode);
+                _a.sent();
+                field === null || field === void 0 ? void 0 : field.appendChild(discription);
+                field === null || field === void 0 ? void 0 : field.appendChild(br);
+                field === null || field === void 0 ? void 0 : field.appendChild(timernode);
+                if (gametype === "click")
+                    field === null || field === void 0 ? void 0 : field.classList.add("gametypeclick");
                 return [4 /*yield*/];
             case 2:
-                _d.sent();
+                _a.sent();
                 return [2 /*return*/];
         }
     });
 }
-var gamestart = function (option) {
-    console.log("options: " + options);
-    console.log("Game Start!");
+var gamestart = function (option) { return __awaiter(void 0, void 0, void 0, function () {
+    var timernode, limit, score, count, _count, result;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                timernode = document.getElementById("timer");
+                limit = option.time;
+                score = 0;
+                count = 0;
+                console.log("options: " + options);
+                console.log("Game Start!");
+                if (gametype === "click")
+                    field === null || field === void 0 ? void 0 : field.addEventListener("click", function () { return ++count; });
+                else if (gametype === "allkey")
+                    window.addEventListener("keyup", function () { return ++count; }, true);
+                else {
+                    window.addEventListener("keyup", function (event) {
+                        if (option.acceptkeys.includes(event.keyCode))
+                            ++count;
+                    }, true);
+                }
+                _a.label = 1;
+            case 1:
+                if (!true) return [3 /*break*/, 3];
+                return [4 /*yield*/, sleep(1000)];
+            case 2:
+                _a.sent();
+                --limit;
+                timernode.textContent = String(limit);
+                if (limit <= 0)
+                    return [3 /*break*/, 3];
+                return [3 /*break*/, 1];
+            case 3:
+                _count = count;
+                if (options === null || options === void 0 ? void 0 : options.includes("2x"))
+                    _count /= 2;
+                if (options === null || options === void 0 ? void 0 : options.includes("+5"))
+                    Math.round(_count = _count * 0.4);
+                score = _count * option.score;
+                score += (_count - _count % 100) / 100 * 10;
+                result = {
+                    count: count,
+                    score: parseInt(String(score)),
+                    gametype: gametype,
+                    options: options
+                };
+                field === null || field === void 0 ? void 0 : field.remove();
+                showresult(option, result);
+                return [2 /*return*/];
+        }
+    });
+}); };
+var showresult = function (option, result) {
+    var _a;
+    var field = document.createElement("div");
+    field.id = "gamefield";
+    field.classList.add("field");
+    document.getElementsByTagName("body")[0].appendChild(field);
+    var resulttable = document.createElement("table");
+    var tabletitlerow = document.createElement("tr"), tabletitle = document.createElement("th");
+    var gametyperow = document.createElement("tr"), gametypetitle = document.createElement("td"), gametypedata = document.createElement("td");
+    var timerow = document.createElement("tr"), timetitle = document.createElement("td"), timedata = document.createElement("td");
+    var scorerow = document.createElement("tr"), scoretitle = document.createElement("td"), scoredata = document.createElement("td");
+    var countrow = document.createElement("tr"), counttitle = document.createElement("td"), countdata = document.createElement("td");
+    var optionsrow = document.createElement("tr"), optionstitle = document.createElement("td"), optiondata = document.createElement("td");
+    tabletitle.textContent = "結果";
+    gametypetitle.textContent = "ゲームタイプ";
+    timetitle.textContent = "制限時間";
+    scoretitle.textContent = "スコア";
+    counttitle.textContent = "打数";
+    optionstitle.textContent = "オプション";
+    switch (gametype) {
+        case "arrows":
+            gametypedata.textContent = "上下左右キー";
+            break;
+        case "dfjk":
+            gametypedata.textContent = "dfjk";
+            break;
+        case "space":
+            gametypedata.textContent = "スペースキー";
+            break;
+        case "enter":
+            gametypedata.textContent = "エンターキー";
+            break;
+        case "allkey":
+            gametypedata.textContent = "全てのキー";
+            break;
+        case "fourkeys":
+            gametypedata.textContent = "お好きな4キー";
+            break;
+        case "click":
+            gametypedata.textContent = "マウスクリック";
+            break;
+    }
+    timedata.textContent = String(option.time);
+    scoredata.textContent = String(result.score);
+    countdata.textContent = String(result.count);
+    optiondata.textContent = String((_a = result.options) === null || _a === void 0 ? void 0 : _a.join(", ").replace(/,\s$/, ""));
+    resulttable.id = "resulttable";
+    tabletitle.setAttribute("colspan", "2");
+    tabletitlerow.appendChild(tabletitle);
+    gametyperow.appendChild(gametypetitle);
+    gametyperow.appendChild(gametypedata);
+    timerow.appendChild(timetitle);
+    timerow.appendChild(timedata);
+    scorerow.appendChild(scoretitle);
+    scorerow.appendChild(scoredata);
+    countrow.appendChild(counttitle);
+    countrow.appendChild(countdata);
+    optionsrow.appendChild(optionstitle);
+    optionsrow.appendChild(optiondata);
+    resulttable.appendChild(tabletitlerow);
+    resulttable.appendChild(gametyperow);
+    resulttable.appendChild(timerow);
+    resulttable.appendChild(scorerow);
+    resulttable.appendChild(countrow);
+    resulttable.appendChild(optionsrow);
+    field.appendChild(resulttable);
 };
 window.addEventListener("DOMContentLoaded", function () { return console.log("gametype: " + gametype); });
 window.addEventListener("load", countdown);

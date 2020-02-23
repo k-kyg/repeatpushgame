@@ -39,40 +39,40 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
-  div {
-    position: relative;
-    background-color: var(--btnbgcolor);
-    border: 2px solid rgb(0, 191, 255);
-    width: 250px;
-    height: 50px;
-    margin: 10px;
-    box-sizing: border-box;
-    border-radius: 5px;
+}
+.button {
+  position: relative;
+  background-color: var(--btnbgcolor);
+  border: 2px solid rgb(0, 191, 255);
+  width: 250px;
+  height: 50px;
+  margin: 10px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  transition: 100ms;
+  cursor: pointer;
+  user-select: none;
+  a {
+    text-decoration: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: var(--btntxtcolor);
+    transform: translate(-50%, -50%);
+    width: 100%;
+  }
+  &.hover:hover {
+    background-color: var(--btnbghvcolor);
     transition: 100ms;
-    cursor: pointer;
-    user-select: none;
     a {
-      text-decoration: none;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      color: var(--btntxtcolor);
-      transform: translate(-50%, -50%);
-      width: 100%;
+      color: var(--btntxthvcolor);
     }
-    &.hover:hover {
-      background-color: var(--btnbghvcolor);
-      transition: 100ms;
-      a {
-        color: var(--btntxthvcolor);
-      }
-    }
-    &.active:active {
-      background-color: var(--btnbghvcolor);
-      transition: 100ms;
-      a {
-        color: var(--btntxthvcolor);
-      }
+  }
+  &.active:active {
+    background-color: var(--btnbghvcolor);
+    transition: 100ms;
+    a {
+      color: var(--btntxthvcolor);
     }
   }
 }
@@ -94,17 +94,17 @@ h1.countdown {
   font-size: 4rem;
 }
 .selectfield {
-	position: absolute;
-	display: flex;
+  position: absolute;
+  display: flex;
   width: auto;
   height: auto;
   top: 50%;
   left: 50%;
-	transform: translate(-50%, -50%);
-	flex-flow: row wrap;
-    justify-content: space-evenly;
-    align-items: center;
-    align-content: center;
+  transform: translate(-50%, -50%);
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  align-content: center;
   h1 {
     float: left;
     width: 62.5px;
@@ -120,29 +120,30 @@ h1.countdown {
     }
   }
 }
-#funcbtns{
-	position: absolute;
-	top: 20px;
-	right: 20px;
-	margin: 0;
-	display: flex;
-	flex-flow: column wrap;
-	justify-content: space-evenly;
-	> svg {
-		fill: var(--txtcolor);
-		position: relative;
-		cursor: pointer;
-		margin: 5px;
-	}
-	@media screen and (max-width: 399px){
-		top: unset;
-		bottom: 10px;
-		left: 50%;
-		transform: translateX(-50%);
-		flex-direction: row;
-	}
+#funcbtns {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  margin: 0;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-evenly;
+  > svg {
+    fill: var(--txtcolor);
+    position: relative;
+    cursor: pointer;
+    margin: 5px;
+  }
+  @media screen and (max-width: 399px) {
+    top: unset;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: row;
+  }
 }
-#settingfield, #helpfield {
+#settingfield,
+#helpfield {
   position: absolute;
   top: 0;
   left: 0;
@@ -150,45 +151,45 @@ h1.countdown {
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(3px);
-	-webkit-backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
   transition: clip-path 1s ease-in-out;
-	-webkit-transition: -webkit-clip-path 1s ease-in-out;
-	-moz-transition: clip-path 1s ease-in-out;
+  -webkit-transition: -webkit-clip-path 1s ease-in-out;
+  -moz-transition: clip-path 1s ease-in-out;
   clip-path: circle(0 at 50% 50%);
-	-webkit-clip-path: circle(0 at 50% 50%);
-	-moz-clip-path: circle(0 at 50% 50%);
-	pointer-events: none;
+  -webkit-clip-path: circle(0 at 50% 50%);
+  -moz-clip-path: circle(0 at 50% 50%);
+  pointer-events: none;
   &.active {
-		pointer-events: all;
+    pointer-events: all;
     clip-path: circle(100% at 50% 50%);
-		-webkit-clip-path: circle(100% at 50% 50%);
-		-moz-clip-path: circle(100% at 50% 50%);
-	}
-	.help{
-		position: absolute;
+    -webkit-clip-path: circle(100% at 50% 50%);
+    -moz-clip-path: circle(100% at 50% 50%);
+  }
+  .help {
+    position: absolute;
     top: 50%;
     left: 50%;
     width: 80%;
     height: 75%;
     transform: translate(-50%, -50%);
-		background-color: rgba(0, 0, 0, 0.5);
-		color: white;
-		border-radius: 5px;
-		overflow: scroll;
-		overflow-x: hidden;
-		padding: 10px 2%;
-		box-sizing: border-box;
-		line-height: 1.5em;
-		& > *:not(h1){
-			text-align: left;
-		}
-		p{
-			font-size: 1.1em;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 5px;
+    overflow: scroll;
+    overflow-x: hidden;
+    padding: 10px 2%;
+    box-sizing: border-box;
+    line-height: 1.5em;
+    & > *:not(h1) {
+      text-align: left;
     }
-    a{
+    p {
+      font-size: 1.1em;
+    }
+    a {
       color: white;
     }
-	}
+  }
   .buttons {
     position: absolute;
     top: 50%;
@@ -228,7 +229,8 @@ h1.countdown {
       }
     }
   }
-  #closesettingbtn, #closehelpbtn {
+  #closesettingbtn,
+  #closehelpbtn {
     fill: white;
     cursor: pointer;
     position: absolute;
@@ -236,21 +238,38 @@ h1.countdown {
     right: 10px;
   }
 }
-.cover{
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100vw;
-	height: 100vh;
-	z-index: -10;
+.cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -10;
 }
-// @keyframes open {
-//   0% {
-//     clip-path: circle(0 at 50% 50%);
-//     -webkit-clip-path: circle(0 at 50% 50%);
-//   }
-//   100% {
-//     clip-path: circle(100% at 50% 50%);
-//     -webkit-clip-path: circle(100% at 50% 50%);
-//   }
-// }
+#gamefield {
+  user-select: none;
+  border-radius: 10px;
+}
+.gametypeclick {
+  border: 2px solid rgb(0, 191, 255);
+  cursor: pointer;
+}
+#resulttable{
+  position: absolute;
+  width: 70%;
+  height: 70%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid rgb(0, 191, 255);
+  border-radius: 5px;
+  border-spacing: 0px;
+  color: var(--txtcolor);
+  font-size: 1.3em;
+  td, th{
+    border: 1px solid rgb(0, 191, 255);
+  }
+  td:nth-child(odd){
+    width: 40%;
+  }
+}

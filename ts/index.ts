@@ -24,7 +24,7 @@ let option: NodeListOf<HTMLInputElement> | undefined = document.getElementById("
 				optionstr += `${e.id},`
 			});
 			if (optionstr) if (!confirm(`オプション「${(optionstr = [...new Set(optionstr.split(","))].join(",").replace(/,$/, "")).split(",").join("、")}」がついています。\nスタートしてもよろしいですか？`)) return;
-			location.href = `./game.html?gametype=${encodeURIComponent(e?.id)}&option=${optionstr.replace(/,$/, "") || "none"}`
+			location.href = `./game.html?gametype=${encodeURIComponent(e?.id)}&option=${encodeURIComponent(optionstr.replace(/,$/, "") || "none")}`
 		});
 
 	});
