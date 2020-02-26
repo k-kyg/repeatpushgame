@@ -204,28 +204,33 @@ var calculateoptions = function (options) {
     return result;
 };
 function gamerender(option) {
-    var timernode, span, time, br, discription, timelimit;
+    var timernode, timetitlespan, time, counternode, countertitlespan, counter, br, discription, timelimit;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                timernode = document.createElement("h1");
-                span = document.createElement("span");
-                time = document.createElement("span");
+                timernode = document.createElement("h1"), timetitlespan = document.createElement("span"), time = document.createElement("span");
+                counternode = document.createElement("h1"), countertitlespan = document.createElement("span"), counter = document.createElement("span");
                 br = document.createElement("br");
                 discription = document.createElement("h2");
                 timelimit = option.time;
-                span.textContent = "TimeLimit: ";
+                timetitlespan.textContent = "TimeLimit: ";
                 time.textContent = String(timelimit);
+                countertitlespan.textContent = "連打数: ";
+                counter.textContent = "0";
                 discription.textContent = (gametype === "click" ? "画面をクリックし" : "キーボードを連打し") + "\u3066\u304F\u3060\u3055\u3044";
                 time.id = "timer";
-                timernode.appendChild(span);
+                counter.id = "counter";
+                timernode.appendChild(timetitlespan);
                 timernode.appendChild(time);
+                counternode.appendChild(countertitlespan);
+                counternode.appendChild(counter);
                 return [4 /*yield*/];
             case 1:
                 _a.sent();
                 field === null || field === void 0 ? void 0 : field.appendChild(discription);
                 field === null || field === void 0 ? void 0 : field.appendChild(br);
                 field === null || field === void 0 ? void 0 : field.appendChild(timernode);
+                field === null || field === void 0 ? void 0 : field.appendChild(counternode);
                 if (gametype === "click")
                     field === null || field === void 0 ? void 0 : field.classList.add("gametypeclick");
                 return [4 /*yield*/];
@@ -236,24 +241,33 @@ function gamerender(option) {
     });
 }
 var gamestart = function (option) { return __awaiter(void 0, void 0, void 0, function () {
-    var timernode, limit, score, count, _count, result;
+    var timernode, countnode, limit, score, count, _count, result;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 timernode = document.getElementById("timer");
+                countnode = document.getElementById("counter");
                 limit = option.time;
                 score = 0;
                 count = 0;
                 console.log("options: " + options);
                 console.log("Game Start!");
                 if (gametype === "click")
-                    field === null || field === void 0 ? void 0 : field.addEventListener("click", function () { return ++count; });
+                    field === null || field === void 0 ? void 0 : field.addEventListener("click", function () {
+                        ++count;
+                        countnode.textContent = String(count);
+                    });
                 else if (gametype === "allkey")
-                    window.addEventListener("keyup", function () { return ++count; }, true);
+                    window.addEventListener("keyup", function () {
+                        ++count;
+                        countnode.textContent = String(count);
+                    }, true);
                 else {
                     window.addEventListener("keyup", function (event) {
-                        if (option.acceptkeys.includes(event.keyCode))
+                        if (option.acceptkeys.includes(event.keyCode)) {
                             ++count;
+                            countnode.textContent = String(count);
+                        }
                     }, true);
                 }
                 _a.label = 1;
@@ -290,6 +304,7 @@ var gamestart = function (option) { return __awaiter(void 0, void 0, void 0, fun
 var showresult = function (option, result) {
     var _a;
     var field = document.createElement("div");
+    var isMobile = document.getElementById("ismobile");
     field.id = "gamefield";
     field.classList.add("field");
     document.getElementsByTagName("body")[0].appendChild(field);
@@ -300,12 +315,36 @@ var showresult = function (option, result) {
     var scorerow = document.createElement("tr"), scoretitle = document.createElement("td"), scoredata = document.createElement("td");
     var countrow = document.createElement("tr"), counttitle = document.createElement("td"), countdata = document.createElement("td");
     var optionsrow = document.createElement("tr"), optionstitle = document.createElement("td"), optiondata = document.createElement("td");
+    var buttons = document.createElement("div");
+    var restartbutton = document.createElement("div"), restartbuttontext = document.createElement("a");
+    var topbutton = document.createElement("div"), topbuttontext = document.createElement("a");
+    restartbuttontext.setAttribute("href", "javascript:void(0)");
+    topbuttontext.setAttribute("href", "javascript:void(0)");
+    restartbutton.appendChild(restartbuttontext);
+    topbutton.appendChild(topbuttontext);
+    buttons.appendChild(restartbutton);
+    buttons.appendChild(topbutton);
+    buttons.classList.add("resultbuttons");
+    restartbutton.classList.add("button");
+    topbutton.classList.add("button");
+    if (isMobile.value === "false") {
+        restartbutton.classList.add("hover");
+        topbutton.classList.add("hover");
+    }
+    else if (isMobile.value === "true") {
+        restartbutton.classList.add("active");
+        topbutton.classList.add("active");
+    }
+    restartbutton.addEventListener("click", function () { return location.reload(); });
+    topbutton.addEventListener("click", function () { return location.href = "index.html"; });
     tabletitle.textContent = "結果";
     gametypetitle.textContent = "ゲームタイプ";
     timetitle.textContent = "制限時間";
     scoretitle.textContent = "スコア";
     counttitle.textContent = "打数";
     optionstitle.textContent = "オプション";
+    restartbuttontext.textContent = "リスタート";
+    topbuttontext.textContent = "トップへ戻る";
     switch (gametype) {
         case "arrows":
             gametypedata.textContent = "上下左右キー";
@@ -353,6 +392,7 @@ var showresult = function (option, result) {
     resulttable.appendChild(countrow);
     resulttable.appendChild(optionsrow);
     field.appendChild(resulttable);
+    field.appendChild(buttons);
 };
 window.addEventListener("DOMContentLoaded", function () { return console.log("gametype: " + gametype); });
 window.addEventListener("load", countdown);

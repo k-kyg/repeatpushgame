@@ -148,37 +148,56 @@ const calculateoptions = (options: string[] | undefined) => {
 	return result;
 }
 function* gamerender(option: IOption) {
-	const timernode: HTMLHeadingElement = document.createElement("h1");
-	const span: HTMLSpanElement = document.createElement("span");
-	const time: HTMLSpanElement = document.createElement("span");
+	const timernode: HTMLHeadingElement = document.createElement("h1"),
+		timetitlespan: HTMLSpanElement = document.createElement("span"),
+		time: HTMLSpanElement = document.createElement("span");
+	const counternode: HTMLHeadingElement = document.createElement("h1"),
+		countertitlespan: HTMLSpanElement = document.createElement("span"),
+		counter: HTMLSpanElement = document.createElement("span");
 	const br: HTMLBRElement = document.createElement("br");
 	const discription: HTMLHeadingElement = document.createElement("h2");
 	let timelimit: number = option.time;
-	span.textContent = "TimeLimit: ";
+	timetitlespan.textContent = "TimeLimit: ";
 	time.textContent = String(timelimit);
+	countertitlespan.textContent = "連打数: ";
+	counter.textContent = "0";
 	discription.textContent = `${gametype === "click" ? "画面をクリックし" : "キーボードを連打し"}てください`;
 	time.id = "timer"
-	timernode.appendChild(span);
+	counter.id = "counter";
+	timernode.appendChild(timetitlespan);
 	timernode.appendChild(time);
+	counternode.appendChild(countertitlespan);
+	counternode.appendChild(counter);
 	yield;
 	field?.appendChild(discription);
 	field?.appendChild(br);
 	field?.appendChild(timernode);
+	field?.appendChild(counternode);
 	if (gametype === "click") field?.classList.add("gametypeclick");
 	yield;
 }
 const gamestart = async (option: IOption) => {
 	const timernode: HTMLSpanElement | null = document.getElementById("timer");
+	const countnode: HTMLSpanElement | null = document.getElementById("counter");
 	let limit: number = option.time;
 	let score: number = 0;
 	let count: number = 0;
 	console.log(`options: ${options}`);
 	console.log("Game Start!");
-	if (gametype === "click") field?.addEventListener("click", () => ++count);
-	else if (gametype === "allkey") window.addEventListener("keyup", () => ++count, true);
+	if (gametype === "click") field?.addEventListener("click", () => {
+		++count;
+		countnode!.textContent = String(count);
+	});
+	else if (gametype === "allkey") window.addEventListener("keyup", () => {
+		++count;
+		countnode!.textContent = String(count);
+	}, true);
 	else {
 		window.addEventListener("keyup", event => {
-			if (option.acceptkeys.includes(event.keyCode)) ++count;
+			if (option.acceptkeys.includes(event.keyCode)) {
+				++count;
+				countnode!.textContent = String(count);
+			}
 		}, true);
 	}
 	while (true) {
@@ -203,6 +222,7 @@ const gamestart = async (option: IOption) => {
 }
 const showresult = (option: IOption, result: IResult) => {
 	const field: HTMLDivElement = document.createElement("div");
+	const isMobile: HTMLInputElement = <HTMLInputElement>document.getElementById("ismobile");
 	field.id = "gamefield";
 	field.classList.add("field");
 	document.getElementsByTagName("body")[0].appendChild(field);
@@ -224,12 +244,37 @@ const showresult = (option: IOption, result: IResult) => {
 	const optionsrow: HTMLTableRowElement = document.createElement("tr"),
 		optionstitle: HTMLTableCellElement = document.createElement("td"),
 		optiondata: HTMLTableDataCellElement = document.createElement("td");
+	const buttons: HTMLDivElement = document.createElement("div");
+	const restartbutton: HTMLDivElement = document.createElement("div"),
+		restartbuttontext: HTMLAnchorElement = document.createElement("a");
+	const topbutton: HTMLDivElement = document.createElement("div"),
+		topbuttontext: HTMLAnchorElement = document.createElement("a");
+	restartbuttontext.setAttribute("href", "javascript:void(0)");
+	topbuttontext.setAttribute("href", "javascript:void(0)");
+	restartbutton.appendChild(restartbuttontext);
+	topbutton.appendChild(topbuttontext);
+	buttons.appendChild(restartbutton);
+	buttons.appendChild(topbutton);
+	buttons.classList.add("resultbuttons");
+	restartbutton.classList.add("button");
+	topbutton.classList.add("button");
+	if (isMobile.value === "false") {
+		restartbutton.classList.add("hover");
+		topbutton.classList.add("hover");
+	} else if (isMobile.value === "true") {
+		restartbutton.classList.add("active");
+		topbutton.classList.add("active");
+	}
+	restartbutton.addEventListener("click", () => location.reload());
+	topbutton.addEventListener("click", () => location.href = "index.html");
 	tabletitle.textContent = "結果";
 	gametypetitle.textContent = "ゲームタイプ";
 	timetitle.textContent = "制限時間";
 	scoretitle.textContent = "スコア";
 	counttitle.textContent = "打数";
 	optionstitle.textContent = "オプション";
+	restartbuttontext.textContent = "リスタート";
+	topbuttontext.textContent = "トップへ戻る";
 	switch (gametype) {
 		case "arrows":
 			gametypedata.textContent = "上下左右キー";
@@ -277,6 +322,7 @@ const showresult = (option: IOption, result: IResult) => {
 	resulttable.appendChild(countrow);
 	resulttable.appendChild(optionsrow);
 	field.appendChild(resulttable);
+	field.appendChild(buttons);
 }
 window.addEventListener("DOMContentLoaded", () => console.log(`gametype: ${gametype}`));
 window.addEventListener("load", countdown);

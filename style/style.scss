@@ -254,22 +254,29 @@ h1.countdown {
   border: 2px solid rgb(0, 191, 255);
   cursor: pointer;
 }
-#resulttable{
+#resulttable {
   position: absolute;
   width: 70%;
   height: 70%;
-  top: 50%;
+  top: 0;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   border: 2px solid rgb(0, 191, 255);
   border-radius: 5px;
   border-spacing: 0px;
   color: var(--txtcolor);
   font-size: 1.3em;
-  td, th{
+  td,
+  th {
     border: 1px solid rgb(0, 191, 255);
   }
-  td:nth-child(odd){
+  td:nth-child(odd) {
     width: 40%;
   }
+}
+.resultbuttons {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
