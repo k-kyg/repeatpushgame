@@ -301,6 +301,13 @@ var gamestart = function (option) { return __awaiter(void 0, void 0, void 0, fun
         }
     });
 }); };
+var restart = function () {
+    field = document.createElement("div");
+    field.id = "gamefield";
+    field.classList.add("field");
+    document.getElementsByTagName("body")[0].appendChild(field);
+    countdown();
+};
 var showresult = function (option, result) {
     var _a;
     var field = document.createElement("div");
@@ -335,7 +342,10 @@ var showresult = function (option, result) {
         restartbutton.classList.add("active");
         topbutton.classList.add("active");
     }
-    restartbutton.addEventListener("click", function () { return location.reload(); });
+    restartbutton.addEventListener("click", function () {
+        field.remove();
+        restart();
+    });
     topbutton.addEventListener("click", function () { return location.href = "index.html"; });
     tabletitle.textContent = "結果";
     gametypetitle.textContent = "ゲームタイプ";
@@ -395,4 +405,4 @@ var showresult = function (option, result) {
     field.appendChild(buttons);
 };
 window.addEventListener("DOMContentLoaded", function () { return console.log("gametype: " + gametype); });
-window.addEventListener("load", countdown);
+window.addEventListener("load", function () { return countdown(); });

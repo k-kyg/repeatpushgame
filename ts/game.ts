@@ -2,7 +2,7 @@ const url: URL = new URL(location.href);
 const urlParam: URLSearchParams = url.searchParams;
 const gametype: string | null = urlParam.get("gametype");
 const options: string[] | undefined = urlParam.get("option")?.split(",");
-const field: HTMLElement | null = document.getElementById("gamefield");
+let field: HTMLElement | null = document.getElementById("gamefield");
 const keycodes: number[] = Array(4);
 interface IOption {
 	time: number;
@@ -220,6 +220,13 @@ const gamestart = async (option: IOption) => {
 	field?.remove();
 	showresult(option, result);
 }
+const restart = () => {
+	field = document.createElement("div");
+	field.id = "gamefield";
+	field.classList.add("field");
+	document.getElementsByTagName("body")[0].appendChild(field);
+	countdown();
+}
 const showresult = (option: IOption, result: IResult) => {
 	const field: HTMLDivElement = document.createElement("div");
 	const isMobile: HTMLInputElement = <HTMLInputElement>document.getElementById("ismobile");
@@ -265,7 +272,10 @@ const showresult = (option: IOption, result: IResult) => {
 		restartbutton.classList.add("active");
 		topbutton.classList.add("active");
 	}
-	restartbutton.addEventListener("click", () => location.reload());
+	restartbutton.addEventListener("click", () => {
+		field.remove();
+		restart();
+	});
 	topbutton.addEventListener("click", () => location.href = "index.html");
 	tabletitle.textContent = "結果";
 	gametypetitle.textContent = "ゲームタイプ";
@@ -325,4 +335,4 @@ const showresult = (option: IOption, result: IResult) => {
 	field.appendChild(buttons);
 }
 window.addEventListener("DOMContentLoaded", () => console.log(`gametype: ${gametype}`));
-window.addEventListener("load", countdown);
+window.addEventListener("load", () => countdown());
