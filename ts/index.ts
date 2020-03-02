@@ -1,3 +1,13 @@
+import Ranking from "./ranking.js";
+interface IResult {
+	score: number;
+	count: number;
+	gametype: string | null;
+	options: string[] | undefined;
+}
+interface IResultRecord extends IResult {
+	date: Date;
+}
 const arrows: HTMLElement | null = document.getElementById("arrows"),
 	dfjk: HTMLElement | null = document.getElementById("dfjk"),
 	space: HTMLElement | null = document.getElementById("space"),

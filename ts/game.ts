@@ -1,3 +1,4 @@
+import Ranking from "./ranking.js";
 const url: URL = new URL(location.href);
 const urlParam: URLSearchParams = url.searchParams;
 const gametype: string | null = urlParam.get("gametype");
@@ -14,6 +15,9 @@ interface IResult {
 	count: number;
 	gametype: string | null;
 	options: string[] | undefined;
+}
+interface IResultRecord extends IResult {
+	date: Date;
 }
 const sleep = (x: number) => new Promise(r => setTimeout(r, x));
 const countdown = async () => {
@@ -230,6 +234,8 @@ const restart = () => {
 const showresult = (option: IOption, result: IResult) => {
 	const field: HTMLDivElement = document.createElement("div");
 	const isMobile: HTMLInputElement = <HTMLInputElement>document.getElementById("ismobile");
+	const record: IResultRecord = new Ranking(result);
+	console.log(record);
 	field.id = "gamefield";
 	field.classList.add("field");
 	document.getElementsByTagName("body")[0].appendChild(field);
