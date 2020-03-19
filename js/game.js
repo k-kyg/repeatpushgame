@@ -1,12 +1,3 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var _a;
 import Ranking from "./ranking.js";
 const url = new URL(location.href);
@@ -16,13 +7,13 @@ const options = (_a = urlParam.get("option")) === null || _a === void 0 ? void 0
 let field = document.getElementById("gamefield");
 const keycodes = Array(4);
 const sleep = (x) => new Promise(r => setTimeout(r, x));
-const countdown = () => __awaiter(void 0, void 0, void 0, function* () {
+const countdown = async () => {
     let count = 5;
     if (gametype === "fourkeys") {
         while (true) {
             let msg = "";
             try {
-                msg = String(yield selectkeys());
+                msg = String(await selectkeys());
                 if (confirm(msg))
                     break;
             }
@@ -40,13 +31,13 @@ const countdown = () => __awaiter(void 0, void 0, void 0, function* () {
     field === null || field === void 0 ? void 0 : field.appendChild(countnode);
     while (count > 0) {
         countnode.textContent = String(count);
-        yield sleep(1000);
+        await sleep(1000);
         --count;
     }
     field === null || field === void 0 ? void 0 : field.removeChild(countnode);
     render.next();
     gamestart(option);
-});
+};
 const selectkeys = () => new Promise((resolve, reject) => {
     const selectfield = document.createElement("div");
     selectfield.classList.add("selectfield");
@@ -182,7 +173,7 @@ function* gamerender(option) {
         field === null || field === void 0 ? void 0 : field.classList.add("gametypeclick");
     yield;
 }
-const gamestart = (option) => __awaiter(void 0, void 0, void 0, function* () {
+const gamestart = async (option) => {
     const timernode = document.getElementById("timer");
     const countnode = document.getElementById("counter");
     let limit = option.time;
@@ -209,7 +200,7 @@ const gamestart = (option) => __awaiter(void 0, void 0, void 0, function* () {
         }, true);
     }
     while (true) {
-        yield sleep(1000);
+        await sleep(1000);
         --limit;
         timernode.textContent = String(limit);
         if (limit <= 0)
@@ -230,7 +221,7 @@ const gamestart = (option) => __awaiter(void 0, void 0, void 0, function* () {
     };
     field === null || field === void 0 ? void 0 : field.remove();
     showresult(option, result);
-});
+};
 const restart = () => {
     field = document.createElement("div");
     field.id = "gamefield";
