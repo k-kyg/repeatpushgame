@@ -291,7 +291,7 @@ h1.countdown {
   background-color: var(--themecolor);
   z-index: unset;
   opacity: 0;
-  transition: 500ms all ease-out;
+  // transition: 500ms all ease-out;
   > div {
     position: absolute;
     width: 80%;
@@ -320,6 +320,6 @@ h1.countdown {
     opacity: 1;
     z-index: 10;
     visibility: visible;
-    transition: 500ms all ease-in;
+    // transition: 500ms all ease-in;
   }
 }

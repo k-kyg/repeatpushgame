@@ -53,8 +53,8 @@ const startconfirm = (gametypestr, optionstr) => {
     okbtn === null || okbtn === void 0 ? void 0 : okbtn.addEventListener("click", e => location.href = `./game.html?gametype=${encodeURIComponent(gametypestr)}&option=${encodeURIComponent(optionstr.replace(/,$/, "") || "none")}`);
     nobtn === null || nobtn === void 0 ? void 0 : nobtn.addEventListener("click", e => {
         startconfirmfield === null || startconfirmfield === void 0 ? void 0 : startconfirmfield.classList.remove("active");
-        setTimeout(() => startconfirmfield.style.zIndex = "unset", 500);
-        setTimeout(() => startconfirmfield.style.visibility = "hidden", 500);
+        setTimeout(() => startconfirmfield.style.zIndex = "unset", 0);
+        setTimeout(() => startconfirmfield.style.visibility = "hidden", 0);
     });
 };
 // window.addEventListener("keydown", (event) => console.log(event?.keyCode))
