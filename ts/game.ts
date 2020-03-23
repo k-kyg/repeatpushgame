@@ -319,6 +319,7 @@ const showresult = (option: IOption, result: IResult) => {
 	countdata.textContent = String(result.count);
 	optiondata.textContent = String(result.options?.join(", ").replace(/,\s$/, ""));
 	resulttable.id = "resulttable"
+	resulttable.classList.add("table");
 	tabletitle.setAttribute("colspan", "2");
 	tabletitlerow.appendChild(tabletitle);
 	gametyperow.appendChild(gametypetitle);

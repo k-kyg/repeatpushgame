@@ -1,14 +1,14 @@
 "use strict";
 const isMobile = document.getElementById("ismobile");
 if (navigator.userAgent.includes("Mobile")) {
-    document.querySelectorAll(".play-buttons > *").forEach(e => {
+    document.querySelectorAll(".buttons > *, play-buttons > *").forEach(e => {
         e.classList.add("active");
     });
     isMobile.value = "true";
     console.log("It is mobile device");
 }
 else {
-    document.querySelectorAll(".play-buttons > *").forEach(e => {
+    document.querySelectorAll(".buttons > *, .play-buttons > *").forEach(e => {
         e.classList.add("hover");
     });
     isMobile.value = "false";

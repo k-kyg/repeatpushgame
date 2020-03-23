@@ -254,7 +254,7 @@ h1.countdown {
   border: 2px solid rgb(0, 191, 255);
   cursor: pointer;
 }
-#resulttable {
+.table {
   position: absolute;
   width: 70%;
   height: 70%;
@@ -279,4 +279,47 @@ h1.countdown {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
+}
+#startconfirmfield {
+  visibility: hidden;
+  user-select: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--themecolor);
+  z-index: unset;
+  opacity: 0;
+  transition: 500ms all ease-out;
+  > div {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    .buttons {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 10px;
+    }
+    .table {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      height: 50%;
+      @media screen and (max-width: 599px) {
+        height: 65%;
+      }
+    }
+  }
+  &.active{
+    opacity: 1;
+    z-index: 10;
+    visibility: visible;
+    transition: 500ms all ease-in;
+  }
 }

@@ -22,7 +22,8 @@ const arrows: HTMLElement | null = document.getElementById("arrows"),
 	rankingbtn: HTMLElement | null = document.getElementById("rankbtn"),
 	funcbtns: HTMLElement | null = document.getElementById("funcbtns"),
 	closehelpbtn: HTMLElement | null = document.getElementById("closehelpbtn"),
-	closesettingbtn: HTMLElement | null = document.getElementById("closesettingbtn");
+	closesettingbtn: HTMLElement | null = document.getElementById("closesettingbtn"),
+	startconfirmfield: HTMLElement | null = document.getElementById("startconfirmfield");
 let option: NodeListOf<HTMLInputElement> | undefined = document.getElementById("settingfield")?.querySelectorAll(`input[type="checkbox"]:checked`);
 {
 	const arr: (HTMLElement | null)[] = [arrows, dfjk, space, enter, allkey, fourkeys, click];
@@ -33,12 +34,52 @@ let option: NodeListOf<HTMLInputElement> | undefined = document.getElementById("
 			option?.forEach(e => {
 				optionstr += `${e.id},`
 			});
-			if (optionstr) if (!confirm(`オプション「${(optionstr = [...new Set(optionstr.split(","))].join(",").replace(/,$/, "")).split(",").join("、")}」がついています。\nスタートしてもよろしいですか？`)) return;
-			location.href = `./game.html?gametype=${encodeURIComponent(e?.id)}&option=${encodeURIComponent(optionstr.replace(/,$/, "") || "none")}`
+			optionstr = [...new Set(optionstr.split(","))].join(",").replace(/,$/, "");
+			startconfirm(e?.id, optionstr);
+			// if (optionstr) if (!confirm(`オプション「${optionstr.split(",").join("、")}」がついています。\nスタートしてもよろしいですか？`)) return;
+			// location.href = `./game.html?gametype=${encodeURIComponent(e?.id)}&option=${encodeURIComponent(optionstr.replace(/,$/, "") || "none")}`
 		});
-
 	});
 }
+const startconfirm = (gametypestr: string, optionstr: string) => {
+	const gametype: HTMLTableDataCellElement = <HTMLTableDataCellElement>document.getElementById("gametype");
+	const option: HTMLTableDataCellElement = <HTMLTableDataCellElement>document.getElementById("option");
+	const okbtn: HTMLElement | null = document.getElementById("ok");
+	const nobtn: HTMLElement | null = document.getElementById("no");
+	startconfirmfield?.classList.add("active");
+	startconfirmfield!.style.zIndex = "2";
+	startconfirmfield!.style.visibility = "visible";
+	switch (gametypestr) {
+		case "arrows":
+			gametype.textContent = "上下左右キー";
+			break;
+		case "dfjk":
+			gametype.textContent = "dfjk";
+			break;
+		case "space":
+			gametype.textContent = "スペースキー";
+			break;
+		case "enter":
+			gametype.textContent = "エンターキー";
+			break;
+		case "allkey":
+			gametype.textContent = "全てのキー";
+			break;
+		case "fourkeys":
+			gametype.textContent = "お好きな4キー";
+			break;
+		case "click":
+			gametype.textContent = "マウスクリック";
+			break;
+	}
+	option.textContent = optionstr.split(",").join("、") || "none";
+	okbtn?.addEventListener("click", e => location.href = `./game.html?gametype=${encodeURIComponent(gametypestr)}&option=${encodeURIComponent(optionstr.replace(/,$/, "") || "none")}`);
+	nobtn?.addEventListener("click", e => {
+		startconfirmfield?.classList.remove("active");
+		setTimeout(() => startconfirmfield!.style.zIndex = "unset", 500);
+		setTimeout(() => startconfirmfield!.style.visibility = "hidden", 500);
+	});
+};
 // window.addEventListener("keydown", (event) => console.log(event?.keyCode))
 setting?.addEventListener("click", () => {
 	settingfield!.style.zIndex = "2"

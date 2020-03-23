@@ -306,6 +306,7 @@ const showresult = (option, result) => {
     countdata.textContent = String(result.count);
     optiondata.textContent = String((_a = result.options) === null || _a === void 0 ? void 0 : _a.join(", ").replace(/,\s$/, ""));
     resulttable.id = "resulttable";
+    resulttable.classList.add("table");
     tabletitle.setAttribute("colspan", "2");
     tabletitlerow.appendChild(tabletitle);
     gametyperow.appendChild(gametypetitle);
