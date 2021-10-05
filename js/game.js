@@ -43,9 +43,7 @@ const selectkeys = (ID) => new Promise((resolve, reject) => {
     const keyselector = (event) => {
         var _a, _b, _c, _d, _e;
         if (ID === selectKeyID) {
-            console.log(ID);
-            console.log(cursor);
-            console.log(!inputs[cursor + 1]);
+            console.log(`ID: ${ID}\ncursor: ${cursor}`);
             switch (event.code) {
                 case "Enter":
                     if (((_a = selectfield.textContent) === null || _a === void 0 ? void 0 : _a.length) !== 4) {
@@ -83,7 +81,8 @@ const selectkeys = (ID) => new Promise((resolve, reject) => {
                         ++cursor;
                     break;
             }
-            console.log(inputs);
+            console.log(`selected keys: ${inputs}`);
+            console.log(Array(20).fill("-").join(""));
             (_d = selectfield.querySelector(`h1[data-fieldnum="${before}"]`)) === null || _d === void 0 ? void 0 : _d.setAttribute("style", "border-color: var(--txtcolor)");
             (_e = selectfield.querySelector(`h1[data-fieldnum="${cursor}"]`)) === null || _e === void 0 ? void 0 : _e.setAttribute("style", "border-color: rgb(0, 191, 255)");
             before = cursor;

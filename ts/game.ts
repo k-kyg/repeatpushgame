@@ -52,9 +52,7 @@ const countdown = async () => {
 const selectkeys = (ID: number) => new Promise((resolve, reject) => {
 	const keyselector = (event: KeyboardEvent) => {
 		if (ID === selectKeyID) {
-			console.log(ID);
-			console.log(cursor);
-			console.log(!inputs[cursor + 1])
+			console.log(`ID: ${ID}\ncursor: ${cursor}`);
 			switch (event.code) {
 				case "Enter":
 					if (selectfield.textContent?.length !== 4) {
@@ -86,7 +84,8 @@ const selectkeys = (ID: number) => new Promise((resolve, reject) => {
 					if (cursor < 3 && !inputs[cursor + 1]) ++cursor;
 					break;
 			}
-			console.log(inputs);
+			console.log(`selected keys: ${inputs}`);
+			console.log(Array(20).fill("-").join(""));
 			selectfield.querySelector(`h1[data-fieldnum="${before}"]`)?.setAttribute("style", "border-color: var(--txtcolor)");
 			selectfield.querySelector(`h1[data-fieldnum="${cursor}"]`)?.setAttribute("style", "border-color: rgb(0, 191, 255)");
 			before = cursor;
