@@ -5,15 +5,16 @@ const urlParam = url.searchParams;
 const gametype = urlParam.get("gametype");
 const options = (_a = urlParam.get("option")) === null || _a === void 0 ? void 0 : _a.split(",");
 let field = document.getElementById("gamefield");
-const keycodes = Array(4);
+const inputs = Array(4);
 const sleep = (x) => new Promise(r => setTimeout(r, x));
+let selectKeyID;
 const countdown = async () => {
     let count = 5;
     if (gametype === "fourkeys") {
         while (true) {
             let msg = "";
             try {
-                msg = String(await selectkeys());
+                msg = String(await selectkeys(selectKeyID = Math.random()));
                 if (confirm(msg))
                     break;
             }
@@ -38,7 +39,56 @@ const countdown = async () => {
     render.next();
     gamestart(option);
 };
-const selectkeys = () => new Promise((resolve, reject) => {
+const selectkeys = (ID) => new Promise((resolve, reject) => {
+    const keyselector = (event) => {
+        var _a, _b, _c, _d, _e;
+        if (ID === selectKeyID) {
+            console.log(ID);
+            console.log(cursor);
+            console.log(!inputs[cursor + 1]);
+            switch (event.code) {
+                case "Enter":
+                    if (((_a = selectfield.textContent) === null || _a === void 0 ? void 0 : _a.length) !== 4) {
+                        field === null || field === void 0 ? void 0 : field.removeChild(selectfield);
+                        inputs.fill("");
+                        reject("無効です。選び直してください。");
+                    }
+                    field === null || field === void 0 ? void 0 : field.removeChild(selectfield);
+                    inputs.fill("");
+                    resolve(`「${(_b = selectfield.textContent) === null || _b === void 0 ? void 0 : _b.split("").join(", ")}」でよろしいですか？`);
+                    break;
+                case "Space": break;
+                case "ArrowLeft":
+                    if (cursor > 0)
+                        --cursor;
+                    break;
+                case "ArrowRight":
+                    if (cursor < 3)
+                        ++cursor;
+                    break;
+                case "Backspace":
+                    selectfield.querySelector(`h1[data-fieldnum="${cursor}"]`).textContent = "";
+                    delete inputs[cursor];
+                    if (cursor > 0)
+                        --cursor;
+                    break;
+                default:
+                    if (event.metaKey || event.altKey || event.shiftKey || event.ctrlKey)
+                        break;
+                    if (event.key.length !== 1 || ((_c = selectfield.textContent) === null || _c === void 0 ? void 0 : _c.includes(event.key.toLowerCase())))
+                        break;
+                    selectfield.querySelector(`h1[data-fieldnum="${cursor}"]`).textContent = event.key.toLowerCase();
+                    inputs[cursor] = event.code;
+                    if (cursor < 3 && !inputs[cursor + 1])
+                        ++cursor;
+                    break;
+            }
+            console.log(inputs);
+            (_d = selectfield.querySelector(`h1[data-fieldnum="${before}"]`)) === null || _d === void 0 ? void 0 : _d.setAttribute("style", "border-color: var(--txtcolor)");
+            (_e = selectfield.querySelector(`h1[data-fieldnum="${cursor}"]`)) === null || _e === void 0 ? void 0 : _e.setAttribute("style", "border-color: rgb(0, 191, 255)");
+            before = cursor;
+        }
+    };
     const selectfield = document.createElement("div");
     selectfield.classList.add("selectfield");
     {
@@ -53,45 +103,7 @@ const selectkeys = () => new Promise((resolve, reject) => {
     field === null || field === void 0 ? void 0 : field.appendChild(selectfield);
     let cursor = 0;
     let before = 0;
-    window.addEventListener("keydown", event => {
-        var _a, _b, _c, _d, _e;
-        switch (event.keyCode) {
-            case 13:
-                if (((_a = selectfield.textContent) === null || _a === void 0 ? void 0 : _a.length) !== 4) {
-                    field === null || field === void 0 ? void 0 : field.removeChild(selectfield);
-                    reject("無効です。選び直してください。");
-                }
-                field === null || field === void 0 ? void 0 : field.removeChild(selectfield);
-                resolve(`「${(_b = selectfield.textContent) === null || _b === void 0 ? void 0 : _b.split("").join(", ")}」でよろしいですか？`);
-                break;
-            case 32: break;
-            case 37:
-                --cursor;
-                break;
-            case 39:
-                ++cursor;
-                break;
-            case 8:
-                selectfield.querySelector(`h1[data-fieldnum="${cursor}"]`).textContent = "";
-                delete keycodes[cursor];
-                --cursor;
-                break;
-            default:
-                if (event.key.length !== 1 || ((_c = selectfield.textContent) === null || _c === void 0 ? void 0 : _c.includes(event.key.toLowerCase())))
-                    break;
-                selectfield.querySelector(`h1[data-fieldnum="${cursor}"]`).textContent = event.key.toLowerCase();
-                keycodes[cursor] = event.keyCode;
-                ++cursor;
-                break;
-        }
-        if (cursor > 3)
-            cursor = 0;
-        else if (cursor < 0)
-            cursor = 3;
-        (_d = selectfield.querySelector(`h1[data-fieldnum="${before}"]`)) === null || _d === void 0 ? void 0 : _d.setAttribute("style", "border-color: var(--txtcolor)");
-        (_e = selectfield.querySelector(`h1[data-fieldnum="${cursor}"]`)) === null || _e === void 0 ? void 0 : _e.setAttribute("style", "border-color: rgb(0, 191, 255)");
-        before = cursor;
-    });
+    window.addEventListener("keydown", keyselector);
 });
 const calculateoptions = (options) => {
     let time = 10;
@@ -100,26 +112,26 @@ const calculateoptions = (options) => {
     switch (gametype) {
         case "arrows":
             score = 360;
-            acceptkeys = [37, 38, 39, 40];
+            acceptkeys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
             break;
         case "dfjk":
             score = 360;
-            acceptkeys = [68, 70, 74, 75];
+            acceptkeys = ["keyD", "keyF", "keyJ", "keyK"];
             break;
         case "space":
             score = 900;
-            acceptkeys = [32];
+            acceptkeys = ["Space"];
             break;
         case "enter":
             score = 900;
-            acceptkeys = [13];
+            acceptkeys = ["Enter"];
             break;
         case "allkey":
             score = 180;
             break;
         case "fourkeys":
             score = 360;
-            acceptkeys = keycodes;
+            acceptkeys = inputs;
             break;
         case "click":
             score = 870;
@@ -193,7 +205,7 @@ const gamestart = async (option) => {
         }, true);
     else {
         window.addEventListener("keyup", event => {
-            if (option.acceptkeys.includes(event.keyCode)) {
+            if (option.acceptkeys.includes(event.code)) {
                 ++count;
                 countnode.textContent = String(count);
             }

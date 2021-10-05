@@ -4,11 +4,13 @@ const urlParam: URLSearchParams = url.searchParams;
 const gametype: string | null = urlParam.get("gametype");
 const options: string[] | undefined = urlParam.get("option")?.split(",");
 let field: HTMLElement | null = document.getElementById("gamefield");
-const keycodes: number[] = Array(4);
+const inputs: string[] = Array(4);
+const sleep = (x: number) => new Promise(r => setTimeout(r, x));
+let selectKeyID: number;
 interface IOption {
 	time: number;
 	score: number;
-	acceptkeys: number[];
+	acceptkeys: string[];
 }
 interface IResult {
 	score: number;
@@ -19,14 +21,13 @@ interface IResult {
 interface IResultRecord extends IResult {
 	date: Date;
 }
-const sleep = (x: number) => new Promise(r => setTimeout(r, x));
 const countdown = async () => {
 	let count: number = 5;
 	if (gametype === "fourkeys") {
 		while (true) {
 			let msg: string = "";
 			try {
-				msg = String(await selectkeys());
+				msg = String(await selectkeys(selectKeyID = Math.random()));
 				if (confirm(msg)) break;
 			} catch (e) {
 				if (e) alert(e);
@@ -48,7 +49,49 @@ const countdown = async () => {
 	render.next();
 	gamestart(option);
 }
-const selectkeys = () => new Promise((resolve, reject) => {
+const selectkeys = (ID: number) => new Promise((resolve, reject) => {
+	const keyselector = (event: KeyboardEvent) => {
+		if (ID === selectKeyID) {
+			console.log(ID);
+			console.log(cursor);
+			console.log(!inputs[cursor + 1])
+			switch (event.code) {
+				case "Enter":
+					if (selectfield.textContent?.length !== 4) {
+						field?.removeChild(selectfield);
+						inputs.fill("");
+						reject("無効です。選び直してください。");
+					}
+					field?.removeChild(selectfield);
+					inputs.fill("");
+					resolve(`「${selectfield.textContent?.split("").join(", ")}」でよろしいですか？`);
+					break;
+				case "Space": break;
+				case "ArrowLeft":
+					if (cursor > 0) --cursor;
+					break;
+				case "ArrowRight":
+					if (cursor < 3) ++cursor;
+					break;
+				case "Backspace":
+					selectfield.querySelector(`h1[data-fieldnum="${cursor}"]`)!.textContent = "";
+					delete inputs[cursor];
+					if (cursor > 0) --cursor;
+					break;
+				default:
+					if (event.metaKey || event.altKey || event.shiftKey || event.ctrlKey) break;
+					if (event.key.length !== 1 || selectfield.textContent?.includes(event.key.toLowerCase())) break;
+					selectfield.querySelector(`h1[data-fieldnum="${cursor}"]`)!.textContent = event.key.toLowerCase();
+					inputs[cursor] = event.code;
+					if (cursor < 3 && !inputs[cursor + 1]) ++cursor;
+					break;
+			}
+			console.log(inputs);
+			selectfield.querySelector(`h1[data-fieldnum="${before}"]`)?.setAttribute("style", "border-color: var(--txtcolor)");
+			selectfield.querySelector(`h1[data-fieldnum="${cursor}"]`)?.setAttribute("style", "border-color: rgb(0, 191, 255)");
+			before = cursor;
+		}
+	}
 	const selectfield: HTMLDivElement = document.createElement("div");
 	selectfield.classList.add("selectfield");
 	{
@@ -63,69 +106,35 @@ const selectkeys = () => new Promise((resolve, reject) => {
 	field?.appendChild(selectfield);
 	let cursor: number = 0;
 	let before: number = 0;
-	window.addEventListener("keydown", event => {
-		switch (event.keyCode) {
-			case 13:
-				if (selectfield.textContent?.length !== 4) {
-					field?.removeChild(selectfield);
-					reject("無効です。選び直してください。");
-				}
-				field?.removeChild(selectfield);
-				resolve(`「${selectfield.textContent?.split("").join(", ")}」でよろしいですか？`);
-				break;
-			case 32: break;
-			case 37:
-				--cursor;
-				break;
-			case 39:
-				++cursor;
-				break;
-			case 8:
-				selectfield.querySelector(`h1[data-fieldnum="${cursor}"]`)!.textContent = "";
-				delete keycodes[cursor];
-				--cursor;
-				break;
-			default:
-				if (event.key.length !== 1 || selectfield.textContent?.includes(event.key.toLowerCase())) break;
-				selectfield.querySelector(`h1[data-fieldnum="${cursor}"]`)!.textContent = event.key.toLowerCase();
-				keycodes[cursor] = event.keyCode;
-				++cursor;
-				break;
-		}
-		if (cursor > 3) cursor = 0;
-		else if (cursor < 0) cursor = 3;
-		selectfield.querySelector(`h1[data-fieldnum="${before}"]`)?.setAttribute("style", "border-color: var(--txtcolor)");
-		selectfield.querySelector(`h1[data-fieldnum="${cursor}"]`)?.setAttribute("style", "border-color: rgb(0, 191, 255)");
-		before = cursor;
-	});
+	window.addEventListener("keydown", keyselector);
 });
 const calculateoptions = (options: string[] | undefined) => {
 	let time: number = 10;
 	let score: number = 360;
-	let acceptkeys: number[] | undefined = Array();
+	let acceptkeys: string[] | undefined = Array();
 	switch (gametype) {
 		case "arrows":
 			score = 360;
-			acceptkeys = [37, 38, 39, 40];
+			acceptkeys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
 			break;
 		case "dfjk":
 			score = 360;
-			acceptkeys = [68, 70, 74, 75];
+			acceptkeys = ["keyD", "keyF", "keyJ", "keyK"];
 			break;
 		case "space":
 			score = 900;
-			acceptkeys = [32];
+			acceptkeys = ["Space"];
 			break;
 		case "enter":
 			score = 900;
-			acceptkeys = [13];
+			acceptkeys = ["Enter"];
 			break;
 		case "allkey":
 			score = 180;
 			break;
 		case "fourkeys":
 			score = 360;
-			acceptkeys = keycodes;
+			acceptkeys = inputs;
 			break;
 		case "click":
 			score = 870;
@@ -198,7 +207,7 @@ const gamestart = async (option: IOption) => {
 	}, true);
 	else {
 		window.addEventListener("keyup", event => {
-			if (option.acceptkeys.includes(event.keyCode)) {
+			if (option.acceptkeys.includes(event.code)) {
 				++count;
 				countnode!.textContent = String(count);
 			}
@@ -241,22 +250,22 @@ const showresult = (option: IOption, result: IResult) => {
 	document.getElementsByTagName("body")[0].appendChild(field);
 	const resulttable: HTMLTableElement = document.createElement("table");
 	const tabletitlerow: HTMLTableRowElement = document.createElement("tr"),
-		tabletitle: HTMLTableHeaderCellElement = document.createElement("th");
+		tabletitle: HTMLTableCellElement = document.createElement("th");
 	const gametyperow: HTMLTableRowElement = document.createElement("tr"),
-		gametypetitle: HTMLTableDataCellElement = document.createElement("td"),
-		gametypedata: HTMLTableDataCellElement = document.createElement("td");
+		gametypetitle: HTMLTableCellElement = document.createElement("td"),
+		gametypedata: HTMLTableCellElement = document.createElement("td");
 	const timerow: HTMLTableRowElement = document.createElement("tr"),
-		timetitle: HTMLTableDataCellElement = document.createElement("td"),
-		timedata: HTMLTableDataCellElement = document.createElement("td");
+		timetitle: HTMLTableCellElement = document.createElement("td"),
+		timedata: HTMLTableCellElement = document.createElement("td");
 	const scorerow: HTMLTableRowElement = document.createElement("tr"),
-		scoretitle: HTMLTableDataCellElement = document.createElement("td"),
-		scoredata: HTMLTableDataCellElement = document.createElement("td");
+		scoretitle: HTMLTableCellElement = document.createElement("td"),
+		scoredata: HTMLTableCellElement = document.createElement("td");
 	const countrow: HTMLTableRowElement = document.createElement("tr"),
-		counttitle: HTMLTableDataCellElement = document.createElement("td"),
-		countdata: HTMLTableDataCellElement = document.createElement("td");
+		counttitle: HTMLTableCellElement = document.createElement("td"),
+		countdata: HTMLTableCellElement = document.createElement("td");
 	const optionsrow: HTMLTableRowElement = document.createElement("tr"),
 		optionstitle: HTMLTableCellElement = document.createElement("td"),
-		optiondata: HTMLTableDataCellElement = document.createElement("td");
+		optiondata: HTMLTableCellElement = document.createElement("td");
 	const buttons: HTMLDivElement = document.createElement("div");
 	const restartbutton: HTMLDivElement = document.createElement("div"),
 		restartbuttontext: HTMLAnchorElement = document.createElement("a");

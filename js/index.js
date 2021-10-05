@@ -81,3 +81,4 @@ closehelpbtn === null || closehelpbtn === void 0 ? void 0 : closehelpbtn.addEven
 rankingbtn === null || rankingbtn === void 0 ? void 0 : rankingbtn.addEventListener("click", () => {
     alert("Coming soon.");
 });
+export {};
