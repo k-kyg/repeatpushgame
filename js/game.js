@@ -17,12 +17,16 @@ const countdown = async () => {
                 msg = String(await selectkeys(selectKeyID = Math.random()));
                 if (confirm(msg))
                     break;
+                else
+                    inputs.fill("");
             }
             catch (e) {
                 if (e)
                     alert(e);
+                inputs.fill("");
             }
         }
+        selectKeyID = 0;
     }
     let option = calculateoptions(options);
     const render = gamerender(option);
@@ -48,11 +52,9 @@ const selectkeys = (ID) => new Promise((resolve, reject) => {
                 case "Enter":
                     if (((_a = selectfield.textContent) === null || _a === void 0 ? void 0 : _a.length) !== 4) {
                         field === null || field === void 0 ? void 0 : field.removeChild(selectfield);
-                        inputs.fill("");
                         reject("無効です。選び直してください。");
                     }
                     field === null || field === void 0 ? void 0 : field.removeChild(selectfield);
-                    inputs.fill("");
                     resolve(`「${(_b = selectfield.textContent) === null || _b === void 0 ? void 0 : _b.split("").join(", ")}」でよろしいですか？`);
                     break;
                 case "Space": break;
@@ -115,7 +117,7 @@ const calculateoptions = (options) => {
             break;
         case "dfjk":
             score = 360;
-            acceptkeys = ["keyD", "keyF", "keyJ", "keyK"];
+            acceptkeys = ["KeyD", "KeyF", "KeyJ", "KeyK"];
             break;
         case "space":
             score = 900;
@@ -155,7 +157,6 @@ const calculateoptions = (options) => {
         acceptkeys: acceptkeys
     };
     console.log(result);
-    console.log(acceptkeys);
     return result;
 };
 function* gamerender(option) {
@@ -277,6 +278,7 @@ const showresult = (option, result) => {
         topbutton.classList.add("active");
     }
     restartbutton.addEventListener("click", () => {
+        inputs.fill("");
         field.remove();
         restart();
     });
