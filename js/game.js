@@ -1,5 +1,12 @@
 var _a;
 import Ranking from "./ranking.js";
+// debugger;
+class GameField extends HTMLElement {
+    constructor() {
+        super();
+    }
+}
+customElements.define("game-field", GameField, { extends: "div" });
 const url = new URL(location.href);
 const urlParam = url.searchParams;
 const gametype = urlParam.get("gametype");
