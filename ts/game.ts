@@ -62,7 +62,7 @@ const countdown = async () => {
 const selectkeys = (ID: number) => new Promise((resolve, reject) => {
 	const keyselector = (event: KeyboardEvent) => {
 		if (ID === selectKeyID) {
-			console.log(`ID: ${ID}\ncursor: ${cursor}`);
+			console.log(`cursor: ${cursor}`);
 			switch (event.code) {
 				case "Enter":
 					if (selectfield.textContent?.length !== 4) {
