@@ -34,7 +34,7 @@ const countdown = async () => {
 		while (true) {
 			let msg: string = "";
 			try {
-				msg = String(await selectkeys(selectKeyID = Math.random()));
+				msg = String(await selectkeys(selectKeyID = Symbol()));
 				if (confirm(msg)) break;
 				else inputs.fill("");
 			} catch (e) {
@@ -151,7 +151,7 @@ const calculateoptions = (options: string[] | undefined) => {
 	if (options?.includes("4x")) {
 		score *= 4;
 		time *= 0.4;
-		time = Math.floor(time);
+		time = thth.floor(time);
 	}
 	if (options?.includes("0.5x")) {
 		score *= 2;

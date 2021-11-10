@@ -21,7 +21,7 @@ const countdown = async () => {
         while (true) {
             let msg = "";
             try {
-                msg = String(await selectkeys(selectKeyID = Math.random()));
+                msg = String(await selectkeys(selectKeyID = Symbol()));
                 if (confirm(msg))
                     break;
                 else
