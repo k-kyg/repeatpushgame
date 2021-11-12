@@ -33,7 +33,7 @@ const countdown = async () => {
                 inputs.fill("");
             }
         }
-        selectKeyID = 0;
+        selectKeyID = Symbol();
     }
     let option = calculateoptions(options);
     const render = gamerender(option);

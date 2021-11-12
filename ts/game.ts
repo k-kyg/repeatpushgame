@@ -13,7 +13,7 @@ const options: string[] | undefined = urlParam.get("option")?.split(",");
 let field: HTMLElement | null = document.getElementById("gamefield");
 const inputs: string[] = Array(4);
 const sleep = (x: number) => new Promise(r => setTimeout(r, x));
-let selectKeyID: number;
+let selectKeyID: Symbol;
 interface IOption {
 	time: number;
 	score: number;
@@ -42,7 +42,7 @@ const countdown = async () => {
 				inputs.fill("");
 			}
 		}
-		selectKeyID = 0;
+		selectKeyID = Symbol();
 	}
 	let option: IOption = calculateoptions(options);
 	const render: Generator<undefined, void, unknown> = gamerender(option);
@@ -59,7 +59,7 @@ const countdown = async () => {
 	render.next();
 	gamestart(option);
 }
-const selectkeys = (ID: number) => new Promise((resolve, reject) => {
+const selectkeys = (ID: Symbol) => new Promise((resolve, reject) => {
 	const keyselector = (event: KeyboardEvent) => {
 		if (ID === selectKeyID) {
 			console.log(`cursor: ${cursor}`);
@@ -151,7 +151,7 @@ const calculateoptions = (options: string[] | undefined) => {
 	if (options?.includes("4x")) {
 		score *= 4;
 		time *= 0.4;
-		time = thth.floor(time);
+		time = Math.floor(time);
 	}
 	if (options?.includes("0.5x")) {
 		score *= 2;
