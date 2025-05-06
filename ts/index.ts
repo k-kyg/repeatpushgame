@@ -1,4 +1,4 @@
-import Ranking from "./ranking.js";
+import Ranking from "./ranking";
 interface IResult {
 	score: number;
 	count: number;

@@ -1,4 +1,4 @@
-import Ranking from "./ranking.js";
+import Ranking from "./ranking";
 // debugger;
 class GameField extends HTMLElement {
 	constructor() {

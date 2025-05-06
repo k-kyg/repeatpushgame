@@ -1,0 +1,26 @@
+{
+  "name": "repeatpushgame",
+  "version": "1.0.0",
+  "description": "- **このゲームは、[https://github.com/kaida-jyouma/kbacts](https://github.com/kaida-jyouma/kbacts)をもとにして作っています。**",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --mode development --watch",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@k-kyg:k-kyg/repeatpushgame.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "webpack": "^5.99.8",
+    "webpack-cli": "^6.0.1"
+  },
+  "devDependencies": {
+    "gsap": "^3.13.0",
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.8.3"
+  }
+}
