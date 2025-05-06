@@ -59,15 +59,16 @@ let option: NodeListOf<HTMLInputElement> | undefined = document
 	});
 }
 const startconfirm = (gametypestr: string, optionstr: string) => {
-	const gametype: HTMLTableDataCellElement = <HTMLTableDataCellElement>(
+	const gametype: HTMLTableCellElement = <HTMLTableCellElement>(
 		document.getElementById("gametype")
 	);
-	const option: HTMLTableDataCellElement = <HTMLTableDataCellElement>(
+	const option: HTMLTableCellElement = <HTMLTableCellElement>(
 		document.getElementById("option")
 	);
 	const okbtn: HTMLElement | null = document.getElementById("ok");
 	const nobtn: HTMLElement | null = document.getElementById("no");
 	startconfirmfield?.classList.add("active");
+	readyAnimation.restart();
 	startconfirmfield!.style.zIndex = "2";
 	startconfirmfield!.style.visibility = "visible";
 	switch (gametypestr) {
@@ -103,6 +104,8 @@ const startconfirm = (gametypestr: string, optionstr: string) => {
 	);
 	nobtn?.addEventListener("click", (e) => {
 		startconfirmfield?.classList.remove("active");
+		readyAnimation.revert();
+		onLoadAnimation.restart();
 		setTimeout(() => (startconfirmfield!.style.zIndex = "unset"), 0);
 		setTimeout(() => (startconfirmfield!.style.visibility = "hidden"), 0);
 	});
@@ -131,3 +134,39 @@ closehelpbtn?.addEventListener("click", () => {
 rankingbtn?.addEventListener("click", () => {
 	alert("Coming soon.");
 });
+
+const LoadAnimationTL = gsap.timeline();
+LoadAnimationTL.set(".button", {
+	y: 30,
+	opacity: 0,
+});
+const onLoadAnimation = LoadAnimationTL.to(".button", {
+	y: 0,
+	opacity: 1,
+	ease: "expo.out",
+	stagger: {
+		each: 0.1,
+		from: "start",
+	},
+});
+const readyAnimationTL = gsap.timeline();
+readyAnimationTL.set(
+	"#startconfirmfield > div > table, #startconfirmfield > div > div > *",
+	{
+		y: 30,
+		opacity: 0,
+	}
+);
+const readyAnimation = readyAnimationTL.to(
+	"#startconfirmfield > div > table, #startconfirmfield > div > div > *",
+	{
+		y: 0,
+		opacity: 1,
+		ease: "expo.out",
+		stagger: {
+			each: 0.1,
+			from: "start",
+		},
+		// paused: true,
+	}
+);

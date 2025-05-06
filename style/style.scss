@@ -155,20 +155,20 @@ h1.countdown {
 	width: 100vw;
 	height: 100vh;
 	background-color: rgba(0, 0, 0, 0.7);
-	backdrop-filter: blur(3px);
 	-webkit-backdrop-filter: blur(3px);
-	transition: clip-path 1s ease-in-out;
+	backdrop-filter: blur(3px);
 	-webkit-transition: -webkit-clip-path 1s ease-in-out;
 	-moz-transition: clip-path 1s ease-in-out;
-	clip-path: circle(0 at 50% 50%);
+	transition: clip-path 1s ease-in-out;
 	-webkit-clip-path: circle(0 at 50% 50%);
 	-moz-clip-path: circle(0 at 50% 50%);
+	clip-path: circle(0 at 50% 50%);
 	pointer-events: none;
 	&.active {
 		pointer-events: all;
-		clip-path: circle(100% at 50% 50%);
 		-webkit-clip-path: circle(100% at 50% 50%);
 		-moz-clip-path: circle(100% at 50% 50%);
+		clip-path: circle(100% at 50% 50%);
 	}
 	.help {
 		position: absolute;
