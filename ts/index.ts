@@ -135,12 +135,12 @@ rankingbtn?.addEventListener("click", () => {
 	alert("Coming soon.");
 });
 
-const LoadAnimationTL = gsap.timeline();
-LoadAnimationTL.set(".button", {
+const loadAnimationTL = gsap.timeline();
+loadAnimationTL.set(".button", {
 	y: 30,
 	opacity: 0,
 });
-const onLoadAnimation = LoadAnimationTL.to(".button", {
+const onLoadAnimation = loadAnimationTL.to(".button", {
 	y: 0,
 	opacity: 1,
 	ease: "expo.out",
