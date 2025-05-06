@@ -1,4 +1,5 @@
 import Ranking from "./ranking";
+import gsap from "gsap";
 interface IResult {
 	score: number;
 	count: number;
@@ -22,19 +23,35 @@ const arrows: HTMLElement | null = document.getElementById("arrows"),
 	rankingbtn: HTMLElement | null = document.getElementById("rankbtn"),
 	funcbtns: HTMLElement | null = document.getElementById("funcbtns"),
 	closehelpbtn: HTMLElement | null = document.getElementById("closehelpbtn"),
-	closesettingbtn: HTMLElement | null = document.getElementById("closesettingbtn"),
-	startconfirmfield: HTMLElement | null = document.getElementById("startconfirmfield");
-let option: NodeListOf<HTMLInputElement> | undefined = document.getElementById("settingfield")?.querySelectorAll(`input[type="checkbox"]:checked`);
+	closesettingbtn: HTMLElement | null =
+		document.getElementById("closesettingbtn"),
+	startconfirmfield: HTMLElement | null =
+		document.getElementById("startconfirmfield");
+let option: NodeListOf<HTMLInputElement> | undefined = document
+	.getElementById("settingfield")
+	?.querySelectorAll(`input[type="checkbox"]:checked`);
 {
-	const arr: (HTMLElement | null)[] = [arrows, dfjk, space, enter, allkey, fourkeys, click];
-	arr.forEach(e => {
+	const arr: (HTMLElement | null)[] = [
+		arrows,
+		dfjk,
+		space,
+		enter,
+		allkey,
+		fourkeys,
+		click,
+	];
+	arr.forEach((e) => {
 		e?.addEventListener("click", () => {
 			let optionstr: string = "";
-			option = document.getElementById("settingfield")?.querySelectorAll(`input[type="checkbox"]:checked`);
-			option?.forEach(e => {
-				optionstr += `${e.id},`
+			option = document
+				.getElementById("settingfield")
+				?.querySelectorAll(`input[type="checkbox"]:checked`);
+			option?.forEach((e) => {
+				optionstr += `${e.id},`;
 			});
-			optionstr = [...new Set(optionstr.split(","))].join(",").replace(/,$/, "");
+			optionstr = [...new Set(optionstr.split(","))]
+				.join(",")
+				.replace(/,$/, "");
 			startconfirm(e?.id, optionstr);
 			// if (optionstr) if (!confirm(`オプション「${optionstr.split(",").join("、")}」がついています。\nスタートしてもよろしいですか？`)) return;
 			// location.href = `./game.html?gametype=${encodeURIComponent(e?.id)}&option=${encodeURIComponent(optionstr.replace(/,$/, "") || "none")}`
@@ -42,8 +59,12 @@ let option: NodeListOf<HTMLInputElement> | undefined = document.getElementById("
 	});
 }
 const startconfirm = (gametypestr: string, optionstr: string) => {
-	const gametype: HTMLTableDataCellElement = <HTMLTableDataCellElement>document.getElementById("gametype");
-	const option: HTMLTableDataCellElement = <HTMLTableDataCellElement>document.getElementById("option");
+	const gametype: HTMLTableDataCellElement = <HTMLTableDataCellElement>(
+		document.getElementById("gametype")
+	);
+	const option: HTMLTableDataCellElement = <HTMLTableDataCellElement>(
+		document.getElementById("option")
+	);
 	const okbtn: HTMLElement | null = document.getElementById("ok");
 	const nobtn: HTMLElement | null = document.getElementById("no");
 	startconfirmfield?.classList.add("active");
@@ -73,32 +94,38 @@ const startconfirm = (gametypestr: string, optionstr: string) => {
 			break;
 	}
 	option.textContent = optionstr.split(",").join("、") || "none";
-	okbtn?.addEventListener("click", e => location.href = `./game.html?gametype=${encodeURIComponent(gametypestr)}&option=${encodeURIComponent(optionstr.replace(/,$/, "") || "none")}`);
-	nobtn?.addEventListener("click", e => {
+	okbtn?.addEventListener(
+		"click",
+		(e) =>
+			(location.href = `./game.html?gametype=${encodeURIComponent(
+				gametypestr
+			)}&option=${encodeURIComponent(optionstr.replace(/,$/, "") || "none")}`)
+	);
+	nobtn?.addEventListener("click", (e) => {
 		startconfirmfield?.classList.remove("active");
-		setTimeout(() => startconfirmfield!.style.zIndex = "unset", 0);
-		setTimeout(() => startconfirmfield!.style.visibility = "hidden", 0);
+		setTimeout(() => (startconfirmfield!.style.zIndex = "unset"), 0);
+		setTimeout(() => (startconfirmfield!.style.visibility = "hidden"), 0);
 	});
 };
 // window.addEventListener("keydown", (event) => console.log(event?.keyCode))
 setting?.addEventListener("click", () => {
-	settingfield!.style.zIndex = "2"
+	settingfield!.style.zIndex = "2";
 	funcbtns!.style.visibility = "hidden";
 	settingfield?.classList.add("active");
 });
 closesettingbtn?.addEventListener("click", () => {
-	setTimeout(() => settingfield!.style.zIndex = "unset", 1000)
-	setTimeout(() => funcbtns!.style.visibility = "visible", 1000);
+	setTimeout(() => (settingfield!.style.zIndex = "unset"), 1000);
+	setTimeout(() => (funcbtns!.style.visibility = "visible"), 1000);
 	settingfield?.classList.remove("active");
 });
 help?.addEventListener("click", () => {
-	helpfield!.style.zIndex = "2"
+	helpfield!.style.zIndex = "2";
 	funcbtns!.style.visibility = "hidden";
 	helpfield?.classList.add("active");
 });
 closehelpbtn?.addEventListener("click", () => {
-	setTimeout(() => helpfield!.style.zIndex = "unset", 1000)
-	setTimeout(() => funcbtns!.style.visibility = "visible", 1000);
+	setTimeout(() => (helpfield!.style.zIndex = "unset"), 1000);
+	setTimeout(() => (funcbtns!.style.visibility = "visible"), 1000);
 	helpfield?.classList.remove("active");
 });
 rankingbtn?.addEventListener("click", () => {

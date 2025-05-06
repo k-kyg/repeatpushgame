@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack --mode development --watch",
+    "prod": "webpack --mode production",
+    "dev": "webpack --mode development --watch --devtool inline-source-map",
     "build": "webpack"
   },
   "repository": {
@@ -19,8 +20,14 @@
     "webpack-cli": "^6.0.1"
   },
   "devDependencies": {
+    "css-loader": "^7.1.2",
     "gsap": "^3.13.0",
+    "mini-css-extract-plugin": "^2.9.2",
+    "sass": "^1.87.0",
+    "sass-loader": "^16.0.5",
+    "style-loader": "^4.0.0",
     "ts-loader": "^9.5.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "webpack-fix-style-only-entries": "^0.6.1"
   }
 }

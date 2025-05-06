@@ -26,6 +26,7 @@ body {
 	color: var(--txtcolor);
 }
 .logo {
+	-webkit-user-select: none;
 	user-select: none;
 	cursor: pointer;
 	display: inline;
@@ -52,6 +53,7 @@ body {
 	border-radius: 5px;
 	transition: 100ms;
 	cursor: pointer;
+	-webkit-user-select: none;
 	user-select: none;
 	a {
 		text-decoration: none;
@@ -91,6 +93,7 @@ h1.countdown {
 	left: 50%;
 	margin: 0;
 	transform: translate(-50%, -50%);
+	-webkit-user-select: none;
 	user-select: none;
 	font-size: 4rem;
 }
@@ -111,10 +114,11 @@ h1.countdown {
 		width: 62.5px;
 		height: 93.75px;
 		font-size: 40px;
-		line-height: 250/8 * 3px;
+		line-height: calc(250 / 8 * 3px);
 		margin: 10px 10px;
 		border-radius: 5px;
 		border: 2px solid var(--txtcolor);
+		-webkit-user-select: none;
 		user-select: none;
 		&:first-child {
 			border-color: rgb(0, 191, 255);
@@ -206,6 +210,7 @@ h1.countdown {
 		align-items: center;
 		align-content: center;
 		label {
+			-webkit-user-select: none;
 			user-select: none;
 			width: 75px;
 			height: 75px;
@@ -248,6 +253,7 @@ h1.countdown {
 	z-index: -10;
 }
 #gamefield {
+	-webkit-user-select: none;
 	user-select: none;
 	border-radius: 10px;
 }
@@ -283,6 +289,7 @@ h1.countdown {
 }
 #startconfirmfield {
 	visibility: hidden;
+	-webkit-user-select: none;
 	user-select: none;
 	position: absolute;
 	top: 0;
